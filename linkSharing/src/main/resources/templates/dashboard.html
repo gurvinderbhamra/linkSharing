@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--navigatioin bar-->
+    <div th:include="~{fragments/header}"></div>
+
+    <!--dashboard body-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 ml-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img th:src="@{images/user.png}" alt="profile-picture" width="100px" height="100px">
+                            </div>
+                            <div class="col-md-8 form-control-sm" style="font-family: fantasy">
+                                <div class="card-title mb-0">
+                                    <b>Username</b>
+                                </div>
+                                <div class="card-text mt-0">
+                                    @userid
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 card-text mt-3">
+                                        <p class="m-0 p-0">Subscriptions</p>
+                                        <p class="m-0 p-0">50</p>
+                                    </div>
+                                    <div class="col-6 card-text mt-3">
+                                        <p class="m-0 p-0">Topics</p>
+                                        <p class="m-0 p-0">50</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--subscription-->
+                <div class="card mt-4" style="font-family: fantasy">
+                    <div class="card-header bg-primary text-white p-2">
+                        <b>Subscriptions</b>
+                    </div>
+                    <div class="card-body p-2">
+                        body text
+                    </div>
+                </div>
+
+                <!--trending topics-->
+                <div class="card mt-4"  style="font-family: fantasy">
+                    <div class="card-header bg-primary text-white p-2">
+                        <b>Trending Topics</b>
+                    </div>
+                    <div class="card-body p-2">
+                        trending topics body
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7" style="font-family: fantasy">
+
+                <!--inbox-->
+                <div class="card">
+                    <div class="card-header bg-primary text-white p-2">
+                        <b>Inbox</b>
+                    </div>
+                    <div class="card-body p-2">
+                        inbox body
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--footer-->
+    <div th:include="~{fragments/footer}"></div>
+</div>
+</body>
+</html>

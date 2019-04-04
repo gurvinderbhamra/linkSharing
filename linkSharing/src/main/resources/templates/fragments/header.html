@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous">
+</head>
+<body>
+<div th:fragment="header">
+<nav class="navbar navbar-light bg-light justify-content-between mr-5 ml-5 mt-2 mb-3 pr-5 pl-5 rounded">
+    <a class="navbar-brand">
+        <img src="../images/icon.png" width="40px" height="40px">
+        <en style="font-weight: bold; color: blue; font-family: 'fantasy'">Link Sharing</en>
+    </a>
+    <form class="form-inline">
+        <div class="input-group md-form form-sm form-1 pl-0">
+            <div class="input-group-prepend">
+                    <span class="input-group-text purple lighten-3" id="basic-text1">
+                        <i class="fas fa-search text-white" aria-hidden="true"></i>
+                    </span>
+            </div>
+            <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+        </div>
+
+        <a href="#" class="ml-2"  data-toggle="modal" data-target="#createTopicModal"><i class="fas fa-comment-dots fa-lg"></i></a>
+        <a href="#" class="ml-2" data-toggle="modal" data-target="#sendInvitation"><i class="fas fa-envelope-square fa-lg"></i></a>
+        <a href="#" class="ml-2" data-toggle="modal" data-target="#shareLinkModal"><i class="fas fa-link fa-lg"></i></a>
+        <a href="#" class="ml-2"><i class="fas fa-sticky-note fa-lg"></i></a>
+        <a href="#" class="ml-5"><img src="../images/user.png" height="40" width="40px" style="border-radius: 50%"></a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Username
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">
+                    <small>Profile</small>
+                </a>
+                <a class="dropdown-item" href="#"><small>Users</small></a>
+                <a class="dropdown-item" href="#"><small>Topics</small></a>
+                <a class="dropdown-item" href="#"><small>Posts</small></a>
+                <a class="dropdown-item" href="#"><small>Logout</small></a>
+            </div>
+            <div>
+                <!--create topic pop-up-->
+                <div class="modal fade" id="createTopicModal" tabindex="-1" role="dialog" aria-labelledby="createTopicModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title form-control-sm">Create Topic</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" style="font-family: fantasy">
+                                    <div class="form-group row">
+                                        <label for="topicName" class="col-md-4 col-form-label form-control-sm mb">Name*</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control form-control-sm" name="topicName"
+                                                   id="topicName" placeholder="Name" REQUIRED>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="dropdownMenu2"
+                                               class="col-md-4 col-form-label form-control-sm">Visibility*</label>
+                                        <!--dropdown-->
+                                        <div class="dropdown col-md-8">
+                                            <button class="btn btn-sm btn-primary dropdown-toggle mt-2 col-sm-6 form-control-sm" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Select visibility
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="visibility">
+                                                <button class="dropdown-item" type="button">Public</button>
+                                                <button class="dropdown-item" type="button">Private</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--send invitation modal-->
+                <div class="modal fade" id="sendInvitation" tabindex="-1" role="dialog" aria-labelledby="sendInvitation" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title form-control-sm">Send Invitation</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" style="font-family: fantasy">
+                                    <div class="form-group row">
+                                        <label for="invitation-Email" class="col-md-4 col-form-label form-control-sm mb">Email*</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control form-control-sm" name="invitation-Email"
+                                                   id="invitation-Email" placeholder="Name" REQUIRED>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label form-control-sm">Topic*</label>
+                                        <!--dropdown-->
+                                        <div class="dropdown col-md-8">
+                                            <button class="btn btn-sm btn-primary dropdown-toggle mt-2 col-sm-6 form-control-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Select topic
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="visibility">
+                                                <button class="dropdown-item" type="button">Topic1</button>
+                                                <button class="dropdown-item" type="button">Topic2</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm">Invite</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--share link-->
+                <div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="shareLinkModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title form-control-sm">Share Link</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" style="font-family: fantasy">
+                                    <div class="form-group row">
+                                        <label for="link" class="col-md-4 col-form-label form-control-sm mb">Link*</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control form-control-sm" name="invitation-Email"
+                                                   id="link" placeholder="Name" REQUIRED>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="descpription" class="col-md-4 col-form-label form-control-sm">Description*</label>
+                                        <div>
+                                            <textarea class="form-control form-control-sm mt-2 ml-3" id="descpription" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="topic"
+                                               class="col-md-4 col-form-label form-control-sm">Topic*</label>
+                                        <!--dropdown-->
+                                        <div class="dropdown col-md-8" id="topic">
+                                            <button class="btn btn-sm btn-primary dropdown-toggle mt-2 col-sm-6 form-control-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Select topic
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="topic">
+                                                <button class="dropdown-item" type="button">Topic1</button>
+                                                <button class="dropdown-item" type="button">Topic2</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm">Invite</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</nav>
+</div>
+</body>
+</html>
