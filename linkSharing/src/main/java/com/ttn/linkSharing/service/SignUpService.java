@@ -21,25 +21,12 @@ public class SignUpService {
 
     private static final String UPLOAD_FILE = "/home/ttn/LinkSharing/linkSharing/src/main/resources/static/images/";
 
-//
-//    public User createUser(User user){
-//        if(userRepository.existsByUsernameOrEmail(user.getUsername(), user.getEmail())){
-//            //throw exception here
-//            return null;
-//        }
-//        return userRepository.save(user);
-//    }
-
     public User createUser(@Valid @ModelAttribute User user, MultipartFile file) throws IOException {
         if (file.equals(null) || file.isEmpty()) {
-            user.setPhoto("user.getUserName()" + "_" + "User.png");
-
+            user.setPhoto(user.getUsername() + "_" + "user.png");
         }
-//        user.setCreatedDate(new Date());
-//        user.setUpdatedDate(new Date());
-//        user.setActive(true);
+        user.setActive(true);
         try {
-
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOAD_FILE + user.getUsername() + "_" + file.getOriginalFilename());
             Files.write(path, bytes);

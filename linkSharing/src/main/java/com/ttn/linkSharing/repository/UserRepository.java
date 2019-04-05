@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Integer> {
     User findByUsernameOrEmail(String username, String email);
     boolean existsByUsernameOrEmail(String username, String email);
+    User findByUserId(Long userId);
 }

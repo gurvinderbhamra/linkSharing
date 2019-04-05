@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -19,12 +20,13 @@ public class UserController {
     public ModelAndView indexPage(User user, HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
         if((Boolean) session.getAttribute("login")!= null && (Boolean) session.getAttribute("login") ) {
+            modelAndView.addObject("user", userService.getUserById((Long)session.getAttribute("userid")));
             modelAndView.setViewName("dashboard");
         }
         else{
+            modelAndView.addObject("user", user);
             modelAndView.setViewName("index");
         }
-        modelAndView.addObject("user", user);
         return modelAndView;
     }
 

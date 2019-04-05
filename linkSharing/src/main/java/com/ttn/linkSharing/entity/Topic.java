@@ -1,8 +1,13 @@
 package com.ttn.linkSharing.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Topic {
@@ -10,10 +15,37 @@ public class Topic {
     @Id
     private Integer id;
 
-    private Boolean visibility;
+    /*private Boolean visibility;
+
+    @Column(unique = true)
     private String topicName;
+
+    @CreationTimestamp
     private Date createdOn;
+
+    @UpdateTimestamp
     private Date updatedOn;
+
+//    user that created topic
+    private String createdBy;
+
+    private List<User> userList;
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
     @Override
     public String toString() {
@@ -63,5 +95,5 @@ public class Topic {
 
     public void setVisibility(Boolean visibility) {
         this.visibility = visibility;
-    }
+    }*/
 }

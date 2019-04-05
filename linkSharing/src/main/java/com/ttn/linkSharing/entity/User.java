@@ -1,7 +1,12 @@
 package com.ttn.linkSharing.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -21,10 +26,53 @@ public class User implements Serializable {
 
     private String password;
     private String photo;
+    private String role;
+
+    @CreationTimestamp
+    private Date createdOn;
+
+    @UpdateTimestamp
+    private Date updatedOn;
 
     @Transient
     private String confirmPassword;
     private Boolean isVerified;
+    private Boolean isActive;
+
+    @OneToMany
+    List<Topic> topicList;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 
     public Long getUserId() {
         return userId;
@@ -96,20 +144,5 @@ public class User implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", photo='" + photo + '\'' +
-                ", confirmPassword='" + confirmPassword + '\'' +
-                ", isVerified=" + isVerified +
-                '}';
     }
 }

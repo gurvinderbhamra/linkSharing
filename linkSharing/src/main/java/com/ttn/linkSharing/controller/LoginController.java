@@ -24,9 +24,20 @@ public class LoginController {
     LoginService loginService;
 
     @PostMapping("/dashboard")
-    public String login(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, Model model){
+    public String login(@Valid @ModelAttribute("user") User user, BindingResult result, HttpServletRequest request, Model model){
         User user1 = loginService.login(user.getUsername(), user.getPassword());
-        if(user1 == null){
+        if(user1 != null){
+            HttpSession session = request.getSession();
+            session.setAttribute("login", true);
+            session.setAttribute("userid", user1.getUserId());
+            model.addAttribute("user", user1);
+            return "dashboard";
+        }
+        else{
+            return "index";
+        }
+
+        /*if(user1 == null){
             return "redirect:/";
         }
         else {
@@ -35,13 +46,13 @@ public class LoginController {
             System.out.println(user1);
             model.addAttribute("user", user1);
             return "dashboard";
-        }
+        }*/
     }
 
     @GetMapping("/dashboard")
     public ModelAndView getMethodDashboard(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         if(session != null) {
             if ((Boolean) session.getAttribute("login") != null) {
                 modelAndView.setViewName("dashboard");
@@ -53,11 +64,12 @@ public class LoginController {
         return modelAndView;
     }
 
-
-
     @GetMapping("/logout")
     public String logout(HttpSession session){
-        session.invalidate();
-        return "redirect:/";
+        if(session != null){
+            session.invalidate();
+            return "redirect:/";
+        }
+        return "dashboard";
     }
 }

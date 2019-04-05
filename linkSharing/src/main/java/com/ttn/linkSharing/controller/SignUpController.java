@@ -1,6 +1,7 @@
 package com.ttn.linkSharing.controller;
 
 import com.ttn.linkSharing.entity.User;
+import com.ttn.linkSharing.service.LoginService;
 import com.ttn.linkSharing.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -25,6 +26,9 @@ public class SignUpController {
 
     @Autowired
     private JavaMailSender sender;
+
+    @Autowired
+    LoginService loginService;
 
     @PostMapping("/registerUser")
     ModelAndView signUp(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam("photoPath") MultipartFile file) throws Exception {
