@@ -4,6 +4,12 @@ import com.ttn.linkSharing.entity.User;
 import com.ttn.linkSharing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Path;
+import javax.validation.Valid;
+import java.io.IOException;
 
 @Service
 public class LoginService {

@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.controller;
 
+import com.ttn.linkSharing.entity.User;
 import com.ttn.linkSharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,16 @@ public class UserController {
     UserService userService;
 
     @RequestMapping("/")
-    public ModelAndView indexPage(HttpSession session){
-        if((Boolean) session.getAttribute("login")!= null && (Boolean) session.getAttribute("login") )
-        {
-            return new ModelAndView("dashboard");
+    public ModelAndView indexPage(User user, HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        if((Boolean) session.getAttribute("login")!= null && (Boolean) session.getAttribute("login") ) {
+            modelAndView.setViewName("dashboard");
         }
-        return new ModelAndView("index");
+        else{
+            modelAndView.setViewName("index");
+        }
+        modelAndView.addObject("user", user);
+        return modelAndView;
     }
 
     @RequestMapping("/forgotPassword")

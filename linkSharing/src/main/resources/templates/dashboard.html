@@ -29,18 +29,20 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 ml-5">
+
+                <!--user detail-->
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <img th:src="@{images/user.png}" alt="profile-picture" width="100px" height="100px">
+                                <img th:src="${'images/' + user.getPhoto()}" alt="profile-picture" width="100px" height="100px">
                             </div>
                             <div class="col-md-8 form-control-sm" style="font-family: fantasy">
                                 <div class="card-title mb-0">
-                                    <b>Username</b>
+                                    <b><span th:text="${user.getFirstName()}"></span></b>
                                 </div>
                                 <div class="card-text mt-0">
-                                    @userid
+                                    @<span th:text="${user.getUsername()}"></span>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 card-text mt-3">
@@ -64,17 +66,149 @@
                         <b>Subscriptions</b>
                     </div>
                     <div class="card-body p-2">
-                        body text
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="images/user.png" alt="image" width="70px"
+                                             height="70px" style="border-radius: 50%">
+                                    </div>
+
+                                    <div class="col-md-10">
+                                        <div class="form-control-md ml-2" style="font-family: fantasy">
+                                            <a href="#">Topic</a>
+                                        </div>
+                                        <div class="card-text form-control-sm"
+                                             style="text-align: justify; font-family: fantasy">
+                                            <div class="row mt-2">
+                                                <div class="col">
+                                                    <div class="p-0">@Username</div>
+                                                    <div>
+                                                        <a href="#">Unsubscribe</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="p-0">Subscriptions</div>
+                                                    <div id="subscriptions">
+                                                        <p th:name="subscrption">50</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="p-0">Post</div>
+                                                    <div>
+                                                        <p th:name="postNumber">3</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col dropdown show ml-2">
+                                        <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuSubscrption1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Very Serious
+                                        </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Serious</a>
+                                            <a class="dropdown-item" href="#">Casual</a>
+                                        </div>
+                                    </div>
+                                    <div class="col dropdown show m-0">
+                                        <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuSubscription2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Private
+                                        </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <small class="dropdown-item" href="#">Public</small>
+                                            <small class="dropdown-item" href="#">Private</small>
+                                        </div>
+                                    </div>
+                                    <div class="col float-right">
+                                        <a href="#"><i class="far fa-envelope fa-lg mr-2"></i></a>
+                                        <a href="#"><i class="fas fa-edit fa-lg mr-2"></i></a>
+                                        <a href="#"><i class="far fa-trash-alt fa-lg"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!--trending topics-->
-                <div class="card mt-4"  style="font-family: fantasy">
+                <div class="card mt-4" style="font-family: fantasy">
                     <div class="card-header bg-primary text-white p-2">
                         <b>Trending Topics</b>
                     </div>
                     <div class="card-body p-2">
-                        trending topics body
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="images/user.png" alt="image" width="70px"
+                                             height="70px" style="border-radius: 50%">
+                                    </div>
+
+                                    <div class="col-md-10">
+                                        <div class="form-control-md ml-2" style="font-family: fantasy">
+                                            <a href="#">Topic</a>
+                                        </div>
+                                        <div class="card-text form-control-sm"
+                                             style="text-align: justify; font-family: fantasy">
+                                            <div class="row mt-2">
+                                                <div class="col">
+                                                    <div class="p-0">@Username</div>
+                                                    <div>
+                                                        <a href="#">Unsubscribe</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="p-0">Subscriptions</div>
+                                                    <div id="subscriptions-trendingTopics">
+                                                        <p th:name="subscrption">50</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="p-0">Post</div>
+                                                    <div>
+                                                        <p th:name="postNumber">3</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col dropdown show ml-2">
+                                        <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuTopic1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Very Serious
+                                        </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Serious</a>
+                                            <a class="dropdown-item" href="#">Casual</a>
+                                        </div>
+                                    </div>
+                                    <div class="col dropdown show m-0">
+                                        <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuTopic2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Private
+                                        </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <small class="dropdown-item" href="#">Public</small>
+                                            <small class="dropdown-item" href="#">Private</small>
+                                        </div>
+                                    </div>
+                                    <div class="col float-right">
+                                        <a href="#"><i class="far fa-envelope fa-lg mr-2"></i></a>
+                                        <a href="#"><i class="fas fa-edit fa-lg mr-2"></i></a>
+                                        <a href="#"><i class="far fa-trash-alt fa-lg"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,7 +221,35 @@
                         <b>Inbox</b>
                     </div>
                     <div class="card-body p-2">
-                        inbox body
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="images/user.png" alt="image" width="80px"
+                                             height="80px" style="border-radius: 50%">
+                                    </div>
+
+                                    <div class="col-10 pl-0">
+                                        <div class="form-control-md mr-1" style="font-family: fantasy">
+                                            <b>Username</b>
+                                            <a href="#">@userid</a>
+                                            <a href="#" class="float-right">Topic</a>
+                                        </div>
+                                        <div class="card-text form-control-sm p-0"
+                                             style="text-align: justify; font-family: fantasy">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
+                                            dolore dolores doloribus earum enim et excepturi facere fuga ipsa ipsu
+                                        </div>
+                                        <div class="row float-right mr-2">
+                                            <a class="mr-3" href="#">Download</a>
+                                            <a class="mr-3" href="#">View full site</a>
+                                            <a class="mr-3" href="#">Mark as read</a>
+                                            <a href="#">View post</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

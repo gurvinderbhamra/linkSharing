@@ -4,11 +4,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "user")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Long userId;
     private String firstName;
     private String LastName;
 
@@ -19,16 +20,17 @@ public class User implements Serializable {
     private String username;
 
     private String password;
+    private String photo;
 
     @Transient
     private String confirmPassword;
-    private String photoPath;
+    private Boolean isVerified;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -72,12 +74,28 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getPhotoPath() {
-        return photoPath;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override
@@ -89,15 +107,9 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", photoPath='" + photoPath + '\'' +
+                ", photo='" + photo + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", isVerified=" + isVerified +
                 '}';
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 }

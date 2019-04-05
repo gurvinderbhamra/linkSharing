@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +25,6 @@ public class LoginController {
 
     @PostMapping("/dashboard")
     public String login(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, Model model){
-        /*if(result.hasErrors()){
-            model.addAttribute("loginErrorsList", result.getFieldErrors());
-        }*/
         User user1 = loginService.login(user.getUsername(), user.getPassword());
         if(user1 == null){
             return "redirect:/";
@@ -33,19 +32,32 @@ public class LoginController {
         else {
             session.setAttribute("login",true);
             session.setAttribute("userid", user.getUserId());
-            model.addAttribute("username", user.getFirstName());
+            System.out.println(user1);
+            model.addAttribute("user", user1);
             return "dashboard";
         }
     }
 
     @GetMapping("/dashboard")
-    public ModelAndView run(){
-        return new ModelAndView("dashboard");
+    public ModelAndView getMethodDashboard(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        HttpSession session = request.getSession(false);
+        if(session != null) {
+            if ((Boolean) session.getAttribute("login") != null) {
+                modelAndView.setViewName("dashboard");
+            }
+        }
+        else {
+            modelAndView.setViewName("index");
+        }
+        return modelAndView;
     }
+
+
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "index";
+        return "redirect:/";
     }
 }

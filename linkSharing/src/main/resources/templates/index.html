@@ -132,11 +132,11 @@
                             <b style="font-family: fantasy">Login</b>
                         </div>
                         <div class="card-body">
-                            <form method="post" style="font-family: fantasy" action="/dashboard">
+                            <form th:method="post" style="font-family: fantasy" th:action="@{'/dashboard'}" th:object="${user}">
                                 <div class="form-group row">
                                     <label for="username-login" class="col-md-4 col-form-label form-control-sm mb">Email/Username*</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control form-control-sm" name="username"
+                                        <input type="text" class="form-control form-control-sm" name="username" th:field="*{username}"
                                                id="username-login" placeholder="Username/Email" REQUIRED>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                                 <a href="forgotPassword" class="form-control-sm">Forgot password?</a>
-                                <input type="submit" class="col-md-5 btn btn-primary btn-sm" value="Login"
+                                <input th:type="submit" class="col-md-5 btn btn-primary btn-sm" th:value="Login"
                                        style="float: right">
                             </form>
                         </div>
@@ -174,7 +174,7 @@
                         <b style="font-family: fantasy">Register</b>
                     </div>
                     <div class="card-body">
-                        <form style="font-family: fantasy" action="registerUser" method="post">
+                        <form style="font-family: fantasy" action="registerUser" method="post" ENCTYPE="multipart/form-data">
                             <div class="form-group row">
                                 <label for="firstName" class="col-md-4 col-form-label form-control-sm">First
                                     Name*: </label>

@@ -12,10 +12,10 @@
 </head>
 <body>
 <div th:fragment="header">
-<nav class="navbar navbar-light bg-light justify-content-between mr-5 ml-5 mt-2 mb-3 pr-5 pl-5 rounded">
+<nav class="navbar navbar-light bg-dark justify-content-between mr-5 ml-5 mt-2 mb-3 pr-5 pl-5 rounded">
     <a class="navbar-brand">
         <img src="../images/icon.png" width="40px" height="40px">
-        <en style="font-weight: bold; color: blue; font-family: 'fantasy'">Link Sharing</en>
+        <en style="font-weight: bold; color: white; font-family: 'fantasy'">Link Sharing</en>
     </a>
     <form class="form-inline">
         <div class="input-group md-form form-sm form-1 pl-0">
@@ -31,10 +31,10 @@
         <a href="#" class="ml-2" data-toggle="modal" data-target="#sendInvitation"><i class="fas fa-envelope-square fa-lg"></i></a>
         <a href="#" class="ml-2" data-toggle="modal" data-target="#shareLinkModal"><i class="fas fa-link fa-lg"></i></a>
         <a href="#" class="ml-2"><i class="fas fa-sticky-note fa-lg"></i></a>
-        <a href="#" class="ml-5"><img src="../images/user.png" height="40" width="40px" style="border-radius: 50%"></a>
+        <a href="#" class="ml-5"><img th:src="${'images/' + user.getPhoto()}" height="40" width="40px" style="border-radius: 50%"></a>
         <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Username
+            <button type="button" class="btn btn-sm btn-dark text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span th:text="${user.getFirstName()}"></span>
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#">
@@ -43,7 +43,7 @@
                 <a class="dropdown-item" href="#"><small>Users</small></a>
                 <a class="dropdown-item" href="#"><small>Topics</small></a>
                 <a class="dropdown-item" href="#"><small>Posts</small></a>
-                <a class="dropdown-item" href="#"><small>Logout</small></a>
+                <a class="dropdown-item" href="/logout"><small>Logout</small></a>
             </div>
             <div>
                 <!--create topic pop-up-->
