@@ -17,7 +17,7 @@
         <img src="../images/icon.png" width="40px" height="40px">
         <en style="font-weight: bold; color: white; font-family: 'fantasy'">Link Sharing</en>
     </a>
-    <form class="form-inline">
+    <form class="form-inline" method="get">
         <div class="input-group md-form form-sm form-1 pl-0">
             <div class="input-group-prepend">
                     <span class="input-group-text purple lighten-3" id="basic-text1">
@@ -37,9 +37,7 @@
                 <span th:text="${user.getFirstName()}"></span>
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">
-                    <small>Profile</small>
-                </a>
+                <a class="dropdown-item" href="/editProfile"><small>Profile</small></a>
                 <a class="dropdown-item" href="#"><small>Users</small></a>
                 <a class="dropdown-item" href="#"><small>Topics</small></a>
                 <a class="dropdown-item" href="#"><small>Posts</small></a>

@@ -1,5 +1,6 @@
-package com.ttn.linkSharing.entity;
+package com.ttn.linkSharing.entities;
 
+import com.ttn.linkSharing.enums.Role;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,7 +27,9 @@ public class User implements Serializable {
 
     private String password;
     private String photo;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @CreationTimestamp
     private Date createdOn;
@@ -39,40 +42,8 @@ public class User implements Serializable {
     private Boolean isVerified;
     private Boolean isActive;
 
-    @OneToMany
-    List<Topic> topicList;
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
+    @ManyToMany
+    private List<Topic> topicList;
 
     public Long getUserId() {
         return userId;
@@ -122,6 +93,38 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -138,11 +141,19 @@ public class User implements Serializable {
         isVerified = verified;
     }
 
-    public String getPhoto() {
-        return photo;
+    public Boolean getActive() {
+        return isActive;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public List<Topic> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
     }
 }

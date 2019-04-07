@@ -1,11 +1,10 @@
-package com.ttn.linkSharing.controller;
+package com.ttn.linkSharing.controllers;
 
-import com.ttn.linkSharing.entity.User;
+import com.ttn.linkSharing.entities.User;
+import com.ttn.linkSharing.service.EmailService;
 import com.ttn.linkSharing.service.LoginService;
 import com.ttn.linkSharing.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 public class SignUpController {
@@ -25,10 +22,10 @@ public class SignUpController {
     SignUpService signUpService;
 
     @Autowired
-    private JavaMailSender sender;
+    LoginService loginService;
 
     @Autowired
-    LoginService loginService;
+    EmailService emailService;
 
     @PostMapping("/registerUser")
     ModelAndView signUp(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam("photoPath") MultipartFile file) throws Exception {
@@ -43,20 +40,11 @@ public class SignUpController {
             return modelAndView;
         }
         try {
-            sendEmail(user1.getEmail());
+            emailService.sendEmail(user1.getEmail());
         } catch (Exception e) {
             System.out.println(e);
         }
         modelAndView.setViewName("dashboard");
         return modelAndView;
-    }
-
-    private void sendEmail(String email) throws Exception{
-        MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setTo(email);
-        helper.setText("This is your confirmation email");
-        helper.setSubject("Link Sharing Confirmation");
-        sender.send(message);
     }
 }

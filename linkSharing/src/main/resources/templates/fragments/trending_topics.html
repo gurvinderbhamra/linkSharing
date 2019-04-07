@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="trending_topics">
+    <div class="card mt-4" style="font-family: fantasy; border: blue 1px solid">
+        <div class="card-header bg-primary text-white p-2">
+            <b>Trending Topics</b>
+        </div>
+        <div class="card-body p-2">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="images/user.png" alt="image" width="70px"
+                                 height="70px" style="border-radius: 50%">
+                        </div>
+
+                        <div class="col-md-10">
+                            <div class="form-control-md ml-2" style="font-family: fantasy">
+                                <a href="#">Topic</a>
+                            </div>
+                            <div class="card-text form-control-sm"
+                                 style="text-align: justify; font-family: fantasy">
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <div class="p-0">@Username</div>
+                                        <div>
+                                            <a href="#">Unsubscribe</a>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="p-0">Subscriptions</div>
+                                        <div id="subscriptions-trendingTopics">
+                                            <p th:name="subscrption">50</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="p-0">Post</div>
+                                        <div>
+                                            <p th:name="postNumber">3</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col dropdown show ml-2">
+                            <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuTopic1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Very Serious
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">Serious</a>
+                                <a class="dropdown-item" href="#">Casual</a>
+                            </div>
+                        </div>
+                        <div class="col dropdown show m-0">
+                            <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuTopic2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Private
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <small class="dropdown-item" href="#">Public</small>
+                                <small class="dropdown-item" href="#">Private</small>
+                            </div>
+                        </div>
+                        <div class="col float-right">
+                            <a href="#"><i class="far fa-envelope fa-lg mr-2"></i></a>
+                            <a href="#"><i class="fas fa-edit fa-lg mr-2"></i></a>
+                            <a href="#"><i class="far fa-trash-alt fa-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

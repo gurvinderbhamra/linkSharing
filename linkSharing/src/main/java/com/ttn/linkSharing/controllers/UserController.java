@@ -1,9 +1,10 @@
-package com.ttn.linkSharing.controller;
+package com.ttn.linkSharing.controllers;
 
-import com.ttn.linkSharing.entity.User;
+import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,8 +32,27 @@ public class UserController {
     }
 
     @RequestMapping("/forgotPassword")
-    @ResponseBody
     public String forgotPassword(){
         return "Forgot Password Processing (password reset kro bhai)";
     }
+
+    @RequestMapping("/editProfile")
+    public String editProfile(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession(false);
+        if(session != null) {
+            User user1 = userService.getUserById((Long) session.getAttribute("userid"));
+            model.addAttribute("user", user1);
+            if(user1 != null)
+                return "editProfile";
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/userProfile")
+    public String userProfile(HttpSession session, Model model){
+        User user = userService.getUserById((Long) session.getAttribute("userid"));
+        model.addAttribute("user", user);
+        return "userProfile";
+    }
+
 }

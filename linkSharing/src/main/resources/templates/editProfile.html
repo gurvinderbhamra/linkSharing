@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+
+    <!--navigatioin bar-->
+    <div th:include="~{fragments/header}"></div>
+
+    <!--edit profile body-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 ml-5">
+
+                <!--user detail-->
+                <div th:include="~{fragments/user_card}"></div>
+
+                <!--trending topics-->
+                <div th:include="~{fragments/trending_topics}"></div>
+            </div>
+
+            <div class="col-md-7" style="font-family: fantasy">
+
+                <!--update profile-->
+                <div class="card" style="border: blue 1px solid">
+                    <div class="card-header bg-primary text-white p-2">
+                        <b>Profile</b>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row p-0 m-0">
+                                    <form style="font-family: fantasy" method="post" ENCTYPE="multipart/form-data" class="col-11 mt-3 mb-3 ml-4">
+                                        <div class="form-group row">
+                                            <label for="firstName" class="col-md-4 col-form-label form-control-sm">First
+                                                Name*: </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control form-control-sm" id="firstName"
+                                                       name="firstName" placeholder="First Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="lastName" class="col-md-4 col-form-label form-control-sm">Last
+                                                Name*: </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control form-control-sm" id="lastName"
+                                                       name="lastName" placeholder="Last Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="username"
+                                                   class="col-md-4 col-form-label form-control-sm">Username*: </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control form-control-sm" id="username"
+                                                       name="username" placeholder="Username" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-form-label form-control-sm" for="photoPath">
+                                                Photo:
+                                            </label>
+                                            <div class="input-group col-8">
+                                                <div class="custom-file form-control-sm">
+                                                    <input type="file" class="custom-file-input" id="photoPath"
+                                                           aria-describedby="inputGroupFileAddon01" name="photoPath" required>
+                                                    <label class="custom-file-label" for="photoPath">Choose file</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary btn-sm col-5" value="Update"
+                                               style="float: right" data-toggle="modal" data-target="#updateSuccess">
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--change password-->
+                <div class="card mt-4" style="border: blue 1px solid">
+                    <div class="card-header bg-primary text-white p-2">
+                        <b>Change Password</b>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row p-0 m-0">
+                                    <form style="font-family: fantasy" method="post" ENCTYPE="multipart/form-data" class="col-11 mt-3 mb-3 ml-4">
+                                        <div class="form-group row">
+                                            <label for="password" class="col-md-4 col-form-label form-control-sm">Password* </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control form-control-sm" id="password"
+                                                       name="firstName" placeholder="Password" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="confirm_password" class="col-md-4 col-form-label form-control-sm">Confirm
+                                                Password* </label>
+                                            <div class="col-md-8">
+                                                <input type="password" class="form-control form-control-sm" id="confirm_password"
+                                                       name="lastName" placeholder="Confirm Password" required>
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary btn-sm col-5" value="Update"
+                                               style="float: right" data-toggle="modal" data-target="#changePassword">
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--footer-->
+    <div th:include="~{fragments/footer}"></div>
+</div>
+</body>
+
+</html>

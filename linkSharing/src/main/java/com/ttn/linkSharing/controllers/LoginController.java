@@ -1,6 +1,6 @@
-package com.ttn.linkSharing.controller;
+package com.ttn.linkSharing.controllers;
 
-import com.ttn.linkSharing.entity.User;
+import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +50,7 @@ public class LoginController {
     @GetMapping("/dashboard")
     public ModelAndView getMethodDashboard(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if(session != null) {
             if ((Boolean) session.getAttribute("login") != null) {
                 modelAndView.setViewName("dashboard");
@@ -62,14 +60,5 @@ public class LoginController {
             modelAndView.setViewName("index");
         }
         return modelAndView;
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session){
-        if(session != null){
-            session.invalidate();
-            return "redirect:/";
-        }
-        return "dashboard";
     }
 }

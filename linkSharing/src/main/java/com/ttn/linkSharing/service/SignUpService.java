@@ -1,7 +1,7 @@
 package com.ttn.linkSharing.service;
 
-import com.ttn.linkSharing.entity.User;
-import com.ttn.linkSharing.repository.UserRepository;
+import com.ttn.linkSharing.entities.User;
+import com.ttn.linkSharing.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;

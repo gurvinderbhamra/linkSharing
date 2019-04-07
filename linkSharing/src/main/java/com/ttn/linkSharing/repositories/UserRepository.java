@@ -1,12 +1,11 @@
-package com.ttn.linkSharing.repository;
+package com.ttn.linkSharing.repositories;
 
-import com.ttn.linkSharing.entity.User;
+import com.ttn.linkSharing.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 public interface UserRepository extends CrudRepository<User, Integer> {
+
     User findByUsernameOrEmail(String username, String email);
-    boolean existsByUsernameOrEmail(String username, String email);
+
     User findByUserId(Long userId);
 }

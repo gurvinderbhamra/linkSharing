@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="user_card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="/userProfile"><img th:src="${'images/' + user.getPhoto()}" alt="profile-picture" width="100px" height="100px"></a>
+                </div>
+                <div class="col-md-8 form-control-sm" style="font-family: fantasy">
+                    <div class="card-title mb-0">
+                        <a href="/userProfile"><b><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"></span></b></a>
+                    </div>
+                    <div class="card-text mt-0">
+                        <a href="/userProfile">@<span th:text="${user.getUsername()}"></span></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 card-text mt-3">
+                            <p class="m-0 p-0">Subscriptions</p>
+                            <p class="m-0 p-0">50</p>
+                        </div>
+                        <div class="col-6 card-text mt-3">
+                            <p class="m-0 p-0">Topics</p>
+                            <p class="m-0 p-0">50</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
