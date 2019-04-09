@@ -17,7 +17,7 @@
         <img src="../images/icon.png" width="40px" height="40px">
         <en style="font-weight: bold; color: white; font-family: 'fantasy'">Link Sharing</en>
     </a>
-    <form class="form-inline" method="get">
+    <div class="form-inline">
         <div class="input-group md-form form-sm form-1 pl-0">
             <div class="input-group-prepend">
                     <span class="input-group-text purple lighten-3" id="basic-text1">
@@ -44,6 +44,7 @@
                 <a class="dropdown-item" href="/logout"><small>Logout</small></a>
             </div>
             <div>
+
                 <!--create topic pop-up-->
                 <div class="modal fade" id="createTopicModal" tabindex="-1" role="dialog" aria-labelledby="createTopicModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -54,36 +55,30 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <form method="post" style="font-family: fantasy">
+                            <form method="post" style="font-family: fantasy" th:action="@{'/topic/create'}" th:object="${topic}" action="#">
+                                <div class="modal-body">
                                     <div class="form-group row">
-                                        <label for="topicName" class="col-md-4 col-form-label form-control-sm mb">Name*</label>
+                                        <label for="topicName"
+                                               class="col-md-4 col-form-label form-control-sm mb">Name*</label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control form-control-sm" name="topicName"
+                                            <input th:field="*{topicName}" type="text" class="form-control form-control-sm" name="topicName"
                                                    id="topicName" placeholder="Name" REQUIRED>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="dropdownMenu2"
-                                               class="col-md-4 col-form-label form-control-sm">Visibility*</label>
-                                        <!--dropdown-->
-                                        <div class="dropdown col-md-8">
-                                            <button class="btn btn-sm btn-primary dropdown-toggle mt-2 col-sm-6 form-control-sm" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Select visibility
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="visibility">
-                                                <button class="dropdown-item" type="button">Public</button>
-                                                <button class="dropdown-item" type="button">Private</button>
-                                            </div>
-                                        </div>
+                                    <div class="form-group form-control-sm mt-2">
+                                        <label for="exampleFormControlSelect1">Select Visibility</label>
+                                        <select class="form-control form-control-sm bg-primary text-white ml-5" id="exampleFormControlSelect1">
+                                            <option name="Public">Public</option>
+                                            <option name="Private">Private</option>
+                                        </select>
                                     </div>
-                                </form>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-sm">Save changes</button>
-                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" value="Create" class="btn btn-primary btn-sm"/>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -183,7 +178,7 @@
 
             </div>
         </div>
-    </form>
+    </div>
 </nav>
 </div>
 </body>

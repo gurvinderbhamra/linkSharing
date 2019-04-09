@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.EmailService;
 import com.ttn.linkSharing.service.LoginService;
@@ -44,7 +45,9 @@ public class SignUpController {
         } catch (Exception e) {
             System.out.println(e);
         }
+        modelAndView.addObject("topic", new Topic());
         modelAndView.setViewName("dashboard");
+        System.out.println(user1.getPhoto());
         return modelAndView;
     }
 }

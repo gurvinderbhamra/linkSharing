@@ -3,27 +3,29 @@ package com.ttn.linkSharing.entities;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Resource implements Serializable {
+public class UserResource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Resource resource;
+
+    private Boolean isRead;
+
+    private Double rating;
 
     @CreationTimestamp
     private Date resourceCreatedOn;
@@ -31,11 +33,38 @@ public abstract class Resource implements Serializable {
     @UpdateTimestamp
     private Date resourceUpdatedOn;
 
-    @ManyToOne
-    private Topic topic;
 
-    @OneToMany(mappedBy = "resource", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<UserResource> userResources = new ArrayList<>();
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
+    public Boolean getRead() {
+        return isRead;
+    }
+
+    public void setRead(Boolean read) {
+        isRead = read;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
 
     public Long getId() {
         return id;
@@ -59,21 +88,5 @@ public abstract class Resource implements Serializable {
 
     public void setResourceUpdatedOn(Date resourceUpdatedOn) {
         this.resourceUpdatedOn = resourceUpdatedOn;
-    }
-
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
-
-    public List<UserResource> getUserResources() {
-        return userResources;
-    }
-
-    public void setUserResources(List<UserResource> userResources) {
-        this.userResources = userResources;
     }
 }

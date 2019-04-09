@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" style="font-family: fantasy" th:action="@{'/topic/create'}" th:object="${topic}" action="#">
+    <div class="modal-body">
+        <div class="form-group row">
+            <label for="topicName"
+                   class="col-md-4 col-form-label form-control-sm mb">Name*</label>
+            <div class="col-md-8">
+                <input th:field="*{topicName}" type="text" class="form-control form-control-sm" name="topicName"
+                       id="topicName" placeholder="Name" REQUIRED>
+            </div>
+        </div>
+        <div class="form-group form-control-sm mt-2">
+            <label for="exampleFormControlSelect1">Select Visibility</label>
+            <select class="form-control form-control-sm bg-primary text-white ml-5" id="exampleFormControlSelect1">
+                <option name="Public">Public</option>
+                <option name="Private">Private</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" value="Create" class="btn btn-primary btn-sm"/>
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close
+        </button>
+    </div>
+</form>
+</body>
+</html>

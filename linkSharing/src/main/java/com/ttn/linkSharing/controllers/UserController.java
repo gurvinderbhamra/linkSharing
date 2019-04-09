@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         if((Boolean) session.getAttribute("login")!= null && (Boolean) session.getAttribute("login") ) {
             modelAndView.addObject("user", userService.getUserById((Long)session.getAttribute("userid")));
+            modelAndView.addObject("topic", new Topic());
             modelAndView.setViewName("dashboard");
         }
         else{
@@ -41,6 +43,7 @@ public class UserController {
         HttpSession session = request.getSession(false);
         if(session != null) {
             User user1 = userService.getUserById((Long) session.getAttribute("userid"));
+            model.addAttribute("topic", new Topic());
             model.addAttribute("user", user1);
             if(user1 != null)
                 return "editProfile";
@@ -52,6 +55,7 @@ public class UserController {
     public String userProfile(HttpSession session, Model model){
         User user = userService.getUserById((Long) session.getAttribute("userid"));
         model.addAttribute("user", user);
+        model.addAttribute("topic", new Topic());
         return "userProfile";
     }
 

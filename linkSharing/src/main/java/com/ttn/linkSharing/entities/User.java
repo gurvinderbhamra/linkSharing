@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +15,8 @@ import java.util.List;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String firstName;
     private String LastName;
 
@@ -42,16 +43,11 @@ public class User implements Serializable {
     private Boolean isVerified;
     private Boolean isActive;
 
-    @ManyToMany
-    private List<Topic> topicList;
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<UserSubscription> userSubscriptions =new ArrayList<>();
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<UserResource> userResources =new ArrayList<>();
 
     public String getFirstName() {
         return firstName;
@@ -149,11 +145,27 @@ public class User implements Serializable {
         isActive = active;
     }
 
-    public List<Topic> getTopicList() {
-        return topicList;
+    public Long getId() {
+        return id;
     }
 
-    public void setTopicList(List<Topic> topicList) {
-        this.topicList = topicList;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<UserSubscription> getUserSubscriptions() {
+        return userSubscriptions;
+    }
+
+    public void setUserSubscriptions(List<UserSubscription> userSubscriptions) {
+        this.userSubscriptions = userSubscriptions;
+    }
+
+    public List<UserResource> getUserResources() {
+        return userResources;
+    }
+
+    public void setUserResources(List<UserResource> userResources) {
+        this.userResources = userResources;
     }
 }
