@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface TopicRepository extends CrudRepository<Topic, Long> {
     Optional<Topic> findById(Long topicId);
     Optional<Topic> findByTopicName(String topicName);
+
+    Integer countByCreatedByLike(String createdBy);
 }

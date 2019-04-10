@@ -2,6 +2,7 @@ package com.ttn.linkSharing.controllers;
 
 import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
+import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.TopicService;
 import com.ttn.linkSharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,11 @@ public class TopicController {
         if(session != null) {
             if (session.getAttribute("userid") != null) {
                 Long userId = (Long) session.getAttribute("userid");
-
-                model.addAttribute("user", userService.getUserById((Long) session.getAttribute("userid")));
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                model.addAttribute("user", user);
                 model.addAttribute("topic", topic);
                 model.addAttribute("linkResource",new LinkResource());
-
+                model.addAttribute("userTopics", topicService.countTopicsOfUser(user.getUsername()));
                 System.out.println(topic.getVisibility());
                 topicService.createTopic(topic, userId);
             }

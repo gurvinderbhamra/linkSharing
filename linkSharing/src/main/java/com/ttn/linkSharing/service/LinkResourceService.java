@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.service;
 
+import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.repositories.LinkResourceRepository;
@@ -22,10 +23,11 @@ public class LinkResourceService {
         return optional.get();
     }
 
-    public LinkResource createLinkResource(LinkResource linkResource){
+    public LinkResource createLinkResource(LinkResourceCo linkResourceCo){
 
-//        Topic topic = topicService.getTopicByName(linkResource.getTopic());
-//        linkResource.setTopic(topic);
+        LinkResource linkResource = new LinkResource(linkResourceCo, topicService.getTopicByTopicId(linkResourceCo.getId()));
+        Topic topic = topicService.getTopicByName(linkResource.getTopic());
+        linkResource.setTopic(topic);
 
         return linkResourceRepository.save(linkResource);
     }

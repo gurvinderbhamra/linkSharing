@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
@@ -31,17 +32,18 @@ public class ResourceController {
     LinkResourceService linkResourceService;
 
     @RequestMapping("/create/link")
-    public String createLinkResource(@Valid @ModelAttribute("linkResource") LinkResource linkResource,
+    public String createLinkResource(@Valid @ModelAttribute("linkResourceCo") LinkResourceCo linkResourceCo,
                                      HttpSession session,
                                      Model model){
         if(session != null){
             if(session.getAttribute("userid") != null){
                 Long userid = (Long) session.getAttribute("userid");
                 User user = userService.getUserById(userid);
-                System.out.println(linkResource);
+
                 model.addAttribute("user", user);
                 model.addAttribute("topic", new Topic());
-                if(linkResourceService.createLinkResource(linkResource) != null){
+                model.addAttribute("linkResourceCo", new LinkResourceCo());
+                if(linkResourceService.createLinkResource(linkResourceCo) != null){
                     return "redirect:/dashboard";
                 }
             }

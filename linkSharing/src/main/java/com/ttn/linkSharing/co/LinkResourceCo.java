@@ -15,8 +15,7 @@ public class LinkResourceCo {
     @Size(min = 5, message = "Description must contain at least 5 characters")
     private String description;
 
-    @NotNull(message = "Please select a topic!")
-    private Long topicId;
+    private Long id;
 
     public String getDescription() {
         return description;
@@ -26,12 +25,12 @@ public class LinkResourceCo {
         this.description = description;
     }
 
-    public Long getTopicId() {
-        return topicId;
+    public Long getId() {
+        return id;
     }
 
-    public void setTopicId(Long topicId) {
-        this.topicId = topicId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLink() {

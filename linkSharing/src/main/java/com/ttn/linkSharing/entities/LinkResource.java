@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.entities;
 
+import com.ttn.linkSharing.co.LinkResourceCo;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.Entity;
@@ -16,9 +17,9 @@ public class LinkResource extends Resource {
 
     public LinkResource(){ }
 
-    public LinkResource(LinkResource linkResource, Topic topic){
-        this.link = linkResource.getLink();
-        this.description = linkResource.getDescription();
+    public LinkResource(LinkResourceCo linkResourceCo, Topic topic){
+        this.link = linkResourceCo.getLink();
+        this.description = linkResourceCo.getDescription();
         this.setTopic(topic);
     }
 

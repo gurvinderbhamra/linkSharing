@@ -39,8 +39,17 @@ public class TopicService {
         return topic;
     }
 
+    public Topic getTopicByTopicId(Long topicId){
+        Optional<Topic> optionalTopic = topicRepository.findById(topicId);
+        return optionalTopic.get();
+    }
+
     public Topic getTopicByName(String topicName){
         Optional<Topic> optionalTopic = topicRepository.findByTopicName(topicName);
         return optionalTopic.get();
+    }
+
+    public Integer countTopicsOfUser(String createdBy){
+        return topicRepository.countByCreatedByLike(createdBy);
     }
 }

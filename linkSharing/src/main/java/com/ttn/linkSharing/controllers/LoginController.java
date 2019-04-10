@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.co.LoginCo;
 import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
@@ -38,7 +39,7 @@ public class LoginController {
             session.setAttribute("userid", user1.getId());
             model.addAttribute("user", user1);
             model.addAttribute("topic",new Topic());
-            model.addAttribute("linkResource", new LinkResource());
+            model.addAttribute("linkResourceCo", new LinkResourceCo());
             return "dashboard";
         }
         return "redirect:/";
@@ -52,7 +53,7 @@ public class LoginController {
                 User user = userService.getUserById((Long) session.getAttribute("userid"));
                 model.addAttribute("user", user);
                 model.addAttribute("topic",new Topic());
-                model.addAttribute("linkResource",new LinkResource());
+                model.addAttribute("linkResourceCo",new LinkResourceCo());
                 return "dashboard";
             }
         }
