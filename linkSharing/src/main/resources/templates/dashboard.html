@@ -39,7 +39,7 @@
                         <b>Subscriptions</b>
                     </div>
                     <div class="card-body p-2">
-                        <div class="row">
+                        <div class="row" th:each="userSubscription : ${user.getUserSubscriptions()}">
                             <div class="col">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -49,13 +49,13 @@
 
                                     <div class="col-md-10">
                                         <div class="form-control-md ml-2" style="font-family: fantasy">
-                                            <a href="#">Topic</a>
+                                            <a href="#" th:text="${userSubscription.getTopic().getTopicName()}">Topic</a>
                                         </div>
                                         <div class="card-text form-control-sm"
                                              style="text-align: justify; font-family: fantasy">
                                             <div class="row mt-2">
                                                 <div class="col">
-                                                    <div class="p-0">@Username</div>
+                                                    <div class="p-0" th:text="${'@' + userSubscription.getTopic().getCreatedBy()}"></div>
                                                     <div>
                                                         <a href="#">Unsubscribe</a>
                                                     </div>
@@ -63,13 +63,13 @@
                                                 <div class="col">
                                                     <div class="p-0">Subscriptions</div>
                                                     <div id="subscriptions">
-                                                        <p th:name="subscrption">50</p>
+                                                        <p th:name="subscrption" th:text="${userSubscription.getTopic().getUserSubscriptions().size()}"></p>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="p-0">Post</div>
                                                     <div>
-                                                        <p th:name="postNumber">3</p>
+                                                        <p th:name="postNumber" th:text="${userSubscription.getTopic().getResources().size()}"></p>
                                                     </div>
                                                 </div>
                                             </div>

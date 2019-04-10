@@ -1,5 +1,7 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.co.LoginCo;
+import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.LoginService;
@@ -28,30 +30,18 @@ public class LoginController {
     UserService userService;
 
     @PostMapping("/dashboard")
-    public String login(@Valid @ModelAttribute("user") User user, BindingResult result, HttpServletRequest request, Model model){
-        User user1 = loginService.login(user.getUsername(), user.getPassword());
+    public String login(@Valid @ModelAttribute("loginCo")LoginCo loginCo, BindingResult result, HttpServletRequest request, Model model){
+        User user1 = loginService.login(loginCo.getUsername(), loginCo.getPassword());
         if(user1 != null){
             HttpSession session = request.getSession();
             session.setAttribute("login", true);
             session.setAttribute("userid", user1.getId());
             model.addAttribute("user", user1);
             model.addAttribute("topic",new Topic());
+            model.addAttribute("linkResource", new LinkResource());
             return "dashboard";
         }
-        else{
-            return "index";
-        }
-
-        /*if(user1 == null){
-            return "redirect:/";
-        }
-        else {
-            session.setAttribute("login",true);
-            session.setAttribute("userid", user.getUserId());
-            System.out.println(user1);
-            model.addAttribute("user", user1);
-            return "dashboard";
-        }*/
+        return "redirect:/";
     }
 
     @GetMapping("/dashboard")
@@ -62,6 +52,7 @@ public class LoginController {
                 User user = userService.getUserById((Long) session.getAttribute("userid"));
                 model.addAttribute("user", user);
                 model.addAttribute("topic",new Topic());
+                model.addAttribute("linkResource",new LinkResource());
                 return "dashboard";
             }
         }

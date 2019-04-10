@@ -1,4 +1,7 @@
 package com.ttn.linkSharing.repositories;
 
-public interface LinkResourceRepository {
+import com.ttn.linkSharing.entities.LinkResource;
+import org.springframework.data.repository.CrudRepository;
+
+public interface LinkResourceRepository extends CrudRepository<LinkResource, Long> {
 }

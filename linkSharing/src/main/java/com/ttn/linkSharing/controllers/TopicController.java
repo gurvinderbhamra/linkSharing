@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.service.TopicService;
 import com.ttn.linkSharing.service.UserService;
@@ -33,8 +34,9 @@ public class TopicController {
 
                 model.addAttribute("user", userService.getUserById((Long) session.getAttribute("userid")));
                 model.addAttribute("topic", topic);
+                model.addAttribute("linkResource",new LinkResource());
 
-                System.out.println(topic.getTopicName());
+                System.out.println(topic.getVisibility());
                 topicService.createTopic(topic, userId);
             }
             else {

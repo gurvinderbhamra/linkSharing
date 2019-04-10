@@ -1,5 +1,6 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.UserService;
@@ -24,6 +25,7 @@ public class UserController {
         if((Boolean) session.getAttribute("login")!= null && (Boolean) session.getAttribute("login") ) {
             modelAndView.addObject("user", userService.getUserById((Long)session.getAttribute("userid")));
             modelAndView.addObject("topic", new Topic());
+            modelAndView.addObject("linkResource",new LinkResource());
             modelAndView.setViewName("dashboard");
         }
         else{
@@ -44,6 +46,7 @@ public class UserController {
         if(session != null) {
             User user1 = userService.getUserById((Long) session.getAttribute("userid"));
             model.addAttribute("topic", new Topic());
+            model.addAttribute("linkResource",new LinkResource());
             model.addAttribute("user", user1);
             if(user1 != null)
                 return "editProfile";
@@ -56,6 +59,7 @@ public class UserController {
         User user = userService.getUserById((Long) session.getAttribute("userid"));
         model.addAttribute("user", user);
         model.addAttribute("topic", new Topic());
+        model.addAttribute("linkResource",new LinkResource());
         return "userProfile";
     }
 

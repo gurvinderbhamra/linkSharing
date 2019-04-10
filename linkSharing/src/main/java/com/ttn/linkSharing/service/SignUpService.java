@@ -19,7 +19,7 @@ public class SignUpService {
     @Autowired
     UserRepository userRepository;
 
-    private static final String UPLOAD_FILE = "/home/ttn/LinkSharing/linkSharing/src/main/resources/static/images/";
+    private static final String UPLOAD_FILE = "/home/ttn/LinkSharing/linkSharing/out/production/resources/static/images";
 
     public User createUser(@Valid @ModelAttribute User user, MultipartFile file) throws IOException {
         if (file.equals(null) || file.isEmpty()) {

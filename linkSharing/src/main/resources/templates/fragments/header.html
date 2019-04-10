@@ -65,11 +65,12 @@
                                                    id="topicName" placeholder="Name" REQUIRED>
                                         </div>
                                     </div>
-                                    <div class="form-group form-control-sm mt-2">
+                                    <div class="form-group form-control-sm mt-2 ml-4">
                                         <label for="exampleFormControlSelect1">Select Visibility</label>
-                                        <select class="form-control form-control-sm bg-primary text-white ml-5" id="exampleFormControlSelect1">
-                                            <option name="Public">Public</option>
-                                            <option name="Private">Private</option>
+                                        <select th:field="*{visibility}" class="form-control form-control-sm bg-primary text-white ml-5" id="exampleFormControlSelect1">
+                                            <option th:each="visibility : ${T(com.ttn.linkSharing.enums.Visibility).values()}"
+                                                    th:value="${visibility}"
+                                                    th:text="${visibility.getValue()}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -136,42 +137,37 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <form method="post" style="font-family: fantasy">
+                            <form method="post" th:action="@{'/resource/create/link'}" style="font-family: fantasy" th:object="${linkResource}">
+                                <div class="modal-body">
                                     <div class="form-group row">
                                         <label for="link" class="col-md-4 col-form-label form-control-sm mb">Link*</label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control form-control-sm" name="invitation-Email"
-                                                   id="link" placeholder="Name" REQUIRED>
+                                            <input type="text" class="form-control form-control-sm" name="link" th:field="*{link}"
+                                                   id="link" placeholder="Location" REQUIRED>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="descpription" class="col-md-4 col-form-label form-control-sm">Description*</label>
                                         <div>
-                                            <textarea class="form-control form-control-sm mt-2 ml-3" id="descpription" rows="2"></textarea>
+                                            <textarea th:field="*{description}" class="form-control form-control-sm mt-2 ml-3" id="descpription" rows="2"></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="topic"
-                                               class="col-md-4 col-form-label form-control-sm">Topic*</label>
-                                        <!--dropdown-->
-                                        <div class="dropdown col-md-8" id="topic">
-                                            <button class="btn btn-sm btn-primary dropdown-toggle mt-2 col-sm-6 form-control-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Select topic
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="topic">
-                                                <button class="dropdown-item" type="button">Topic1</button>
-                                                <button class="dropdown-item" type="button">Topic2</button>
-                                            </div>
-                                        </div>
+                                    <div class="form-group form-control-sm mt-2 ml-4">
+                                        <label for="topicSelect">Select Topic*</label>
+                                        <select class="form-control form-control-sm bg-primary text-white ml-5" id="topicSelect">
+                                            <option>Select one</option>
+                                            <option th:each="topics : ${user.getUserSubscriptions()}"
+                                                    th:value="${topics.getTopic()}"
+                                                    th:text="${topics.getTopic().getTopicName()}"></option>
+                                        </select>
                                     </div>
-                                </form>
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-sm">Invite</button>
-                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" value="Share" class="btn btn-primary btn-sm"/>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

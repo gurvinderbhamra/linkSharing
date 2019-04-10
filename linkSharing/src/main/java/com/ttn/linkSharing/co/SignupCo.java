@@ -1,14 +1,11 @@
 package com.ttn.linkSharing.co;
 
-import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.enums.Role;
 
 import java.util.Date;
-import java.util.List;
 
-public class UserCo {
+public class SignupCo {
 
-    private Long userId;
     private String firstName;
     private String LastName;
 
@@ -27,24 +24,9 @@ public class UserCo {
 
     private String confirmPassword;
     private Boolean isVerified;
-    private Boolean isActive;
+    private Boolean isActive = true;
 
-    //social accounts
-    private String facebook;
-    private String twitter;
-    private String instagram;
-
-    private List<Topic> topicList;
-
-    public UserCo() { }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+    public SignupCo(){ }
 
     public String getFirstName() {
         return firstName;
@@ -142,35 +124,21 @@ public class UserCo {
         isActive = active;
     }
 
-    public String getFacebook() {
-        return facebook;
-    }
-
-    public void setFacebook(String facebook) {
-        this.facebook = facebook;
-    }
-
-    public String getTwitter() {
-        return twitter;
-    }
-
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
-    }
-
-    public String getInstagram() {
-        return instagram;
-    }
-
-    public void setInstagram(String instagram) {
-        this.instagram = instagram;
-    }
-
-    public List<Topic> getTopicList() {
-        return topicList;
-    }
-
-    public void setTopicList(List<Topic> topicList) {
-        this.topicList = topicList;
+    @Override
+    public String toString() {
+        return "SignupCo{" +
+                ", firstName='" + firstName + '\'' +
+                ", LastName='" + LastName + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", photo='" + photo + '\'' +
+                ", role=" + role +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", isVerified=" + isVerified +
+                ", isActive=" + isActive +
+                '}';
     }
 }

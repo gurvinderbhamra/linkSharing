@@ -2,7 +2,7 @@ package com.ttn.linkSharing.enums;
 
 public enum Visibility {
 
-    PUBLIC("public"), PRIVATE("private");
+    PUBLIC("Public"), PRIVATE("Private");
 
     private String value;
 

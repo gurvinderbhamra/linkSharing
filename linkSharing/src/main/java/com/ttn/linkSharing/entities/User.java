@@ -1,10 +1,14 @@
 package com.ttn.linkSharing.entities;
 
+import com.ttn.linkSharing.co.SignupCo;
 import com.ttn.linkSharing.enums.Role;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,15 +21,21 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Size(min=3, message = "First name must contain at least 3 characters")
     private String firstName;
     private String LastName;
 
     @Column(unique = true)
+    @NotNull(message = "Please enter email")
+    @Email(message = "Please enter a valid email address")
     private String email;
 
     @Column(unique = true)
+    @NotNull(message = "Username cannot be empty")
     private String username;
 
+    @NotNull(message = "Password cannot be empty")
     private String password;
     private String photo;
 
@@ -41,13 +51,24 @@ public class User implements Serializable {
     @Transient
     private String confirmPassword;
     private Boolean isVerified;
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<UserSubscription> userSubscriptions =new ArrayList<>();
+    private List<UserSubscription> userSubscriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<UserResource> userResources =new ArrayList<>();
+    private List<UserResource> userResources = new ArrayList<>();
+
+    public User(){ }
+
+    public User(SignupCo signupCo){
+        this.firstName = signupCo.getFirstName();
+        this.LastName = signupCo.getLastName();
+        this.email = signupCo.getEmail();
+        this.username = signupCo.getUsername();
+        this.password = signupCo.getPassword();
+        this.photo = signupCo.getPhoto();
+    }
 
     public String getFirstName() {
         return firstName;
@@ -167,5 +188,26 @@ public class User implements Serializable {
 
     public void setUserResources(List<UserResource> userResources) {
         this.userResources = userResources;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", LastName='" + LastName + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", photo='" + photo + '\'' +
+                ", role=" + role +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", isVerified=" + isVerified +
+                ", isActive=" + isActive +
+                ", userSubscriptions=" + userSubscriptions +
+                ", userResources=" + userResources +
+                '}';
     }
 }

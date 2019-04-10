@@ -26,6 +26,7 @@ public class TopicService {
 
     public Topic createTopic(Topic topic, Long userid){
         User user = userService.getUserById(userid);
+        topic.setCreatedBy(user.getUsername());
 
         UserSubscription userSubscription = new UserSubscription();
         userSubscription.setSeriousness(Seriousness.CASUAL);
@@ -36,5 +37,10 @@ public class TopicService {
 
         topicRepository.save(topic);
         return topic;
+    }
+
+    public Topic getTopicByName(String topicName){
+        Optional<Topic> optionalTopic = topicRepository.findByTopicName(topicName);
+        return optionalTopic.get();
     }
 }

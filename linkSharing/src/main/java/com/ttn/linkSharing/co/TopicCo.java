@@ -2,9 +2,16 @@ package com.ttn.linkSharing.co;
 
 import com.ttn.linkSharing.enums.Visibility;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class TopicCo {
-    String topicName;
-    Visibility visibility;
+
+    @NotBlank(message = "Topic name cannot be empty")
+    @Size(min=1, message = "Topic name must contain at least 1 character")
+    private String topicName;
+
+    private Visibility visibility;
 
     public String getTopicName() {
         return topicName;
