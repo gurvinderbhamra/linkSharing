@@ -61,7 +61,6 @@
     <div class="container-fluid">
         <div class="row">
 
-            <!--recent shares-->
             <div class="col-md-7 ml-5">
 
                 <!--post detail with ratings-->
@@ -71,18 +70,18 @@
                         <!--single post-->
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="images/user.png" alt="image" width="80px"
+                                <img src="../images/user.png" th:src="${'../images/' + user.getPhoto()}" alt="image" width="80px"
                                      height="80px" style="border-radius: 50%">
                             </div>
 
                             <div class="col-md-10">
                                 <div class="form-control-md" style="font-family: fantasy">
-                                    <a href="#"><b>Username</b></a>
+                                    <a href="/userProfile" th:text="${user.getFirstName()}"><b>Username</b></a>
                                     <a href="#" class="float-right">Details</a>
                                 </div>
                                 <div class="col-md-12 pr-0 p-0 m-0">
-                                    <a href="/userProfile">@userid</a>
-                                    <p class="float-right text-secondary">Creation timestamp</p>
+                                    <a href="/userProfile" th:text="${'@' + user.getUsername()}"></a>
+                                    <p class="float-right text-secondary" th:text="${user.getUserResources().get(resourceId).getResourceCreatedOn()}">Creation timestamp</p>
                                 </div>
                                 <div class="col-md-12 pr-0 float-right m-0 p-0">
                                     <div class="stars float-right mt-0 pt-0">

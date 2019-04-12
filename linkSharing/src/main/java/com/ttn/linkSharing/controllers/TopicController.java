@@ -1,6 +1,7 @@
 package com.ttn.linkSharing.controllers;
 
-import com.ttn.linkSharing.entities.LinkResource;
+import com.ttn.linkSharing.co.DocumentResourceCo;
+import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.TopicService;
@@ -27,16 +28,14 @@ public class TopicController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String createTopic(@Valid @ModelAttribute("topic") Topic topic, HttpServletRequest request, Model model){
+
         HttpSession session = request.getSession(false);
-//        ModelAndView modelAndView = new ModelAndView("dashboard");
+
         if(session != null) {
             if (session.getAttribute("userid") != null) {
                 Long userId = (Long) session.getAttribute("userid");
                 User user = userService.getUserById((Long) session.getAttribute("userid"));
-                model.addAttribute("user", user);
-                model.addAttribute("topic", topic);
-                model.addAttribute("linkResource",new LinkResource());
-                model.addAttribute("userTopics", topicService.countTopicsOfUser(user.getUsername()));
+                addAttributes(model, user);
                 System.out.println(topic.getVisibility());
                 topicService.createTopic(topic, userId);
             }
@@ -47,10 +46,35 @@ public class TopicController {
         return "redirect:/dashboard";
     }
 
-    @RequestMapping("/show")
-    public ModelAndView show(Model model){
-        ModelAndView modelAndView = new ModelAndView("topicCreation");
+    @RequestMapping("/view/{topicName}")
+    public String show(@PathVariable("topicName") String topicName, HttpSession session, Model model){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                addAttributes(model, user);
+                return "topic";
+            }
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/search")
+    public String search(HttpSession session, Model model){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                addAttributes(model, user);
+                return "search";
+            }
+        }
+        return "redirect:/";
+    }
+
+    private void addAttributes(Model model, User user){
+        model.addAttribute("user", user);
         model.addAttribute("topic", new Topic());
-        return modelAndView;
+        model.addAttribute("linkResourceCo",new LinkResourceCo());
+        model.addAttribute("documentResourceCo",new DocumentResourceCo());
+        model.addAttribute("userTopics", topicService.countTopicsOfUser(user.getUsername()));
     }
 }

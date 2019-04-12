@@ -1,0 +1,17 @@
+overflow:auto
+values : auto, hidden, scroll
+//it will occupy the whole block for its child, same as inline block
+
+.clearfix
+{
+	overflow:auto;
+}
+
+
+flexbox:
+
+.parent
+{
+	display:flex;
+	flx-wrap:wrap;
+

@@ -10,14 +10,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4">
-                    <a href="/userProfile"><img th:src="${'images/' + user.getPhoto()}" alt="profile-picture" width="100px" height="100px"></a>
+                    <a th:href="@{'/userProfile/' + ${user.getId()}}"><img th:src="${'../images/' + user.getPhoto()}" alt="profile-picture" width="100px" height="100px"></a>
                 </div>
                 <div class="col-md-8 form-control-sm" style="font-family: fantasy">
                     <div class="card-title mb-0">
-                        <a href="/userProfile"><b><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"></span></b></a>
+                        <a th:href="@{'/userProfile/' + ${user.getId()}}"><b><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"></span></b></a>
                     </div>
                     <div class="card-text mt-0">
-                        <a href="/userProfile">@<span th:text="${user.getUsername()}"></span></a>
+                        <a th:href="@{'/userProfile/' + ${user.getId()}}">@<span th:text="${user.getUsername()}"></span></a>
                     </div>
                     <div class="row">
                         <div class="col-6 card-text mt-3">

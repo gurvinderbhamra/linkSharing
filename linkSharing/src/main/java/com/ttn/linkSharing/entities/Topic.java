@@ -32,8 +32,7 @@ public class Topic {
     @UpdateTimestamp
     private Date updatedOn;
 
-    //created by not working
-//    @CreatedBy
+    @CreatedBy
     private String createdBy;
 
     @OneToMany(mappedBy = "topic", orphanRemoval = true, cascade = CascadeType.ALL)

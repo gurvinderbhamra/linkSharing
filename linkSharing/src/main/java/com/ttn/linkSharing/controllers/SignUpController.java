@@ -1,7 +1,8 @@
 package com.ttn.linkSharing.controllers;
 
+import com.ttn.linkSharing.co.DocumentResourceCo;
+import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.co.SignupCo;
-import com.ttn.linkSharing.entities.LinkResource;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.EmailService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -31,7 +33,7 @@ public class SignUpController {
     EmailService emailService;
 
     @PostMapping("/registerUser")
-    ModelAndView signUp(@Valid @ModelAttribute("signupCo") SignupCo signupCo, BindingResult result, @RequestParam("photoPath") MultipartFile file) throws Exception {
+    ModelAndView signUp(@Valid @ModelAttribute("signupCo") SignupCo signupCo, BindingResult result, @RequestParam("photoPath") MultipartFile file, HttpSession session) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         if(result.hasErrors()){
             modelAndView.addObject("signUpError", result.getAllErrors());
@@ -55,9 +57,11 @@ public class SignUpController {
 
         modelAndView.addObject("user", user1);
         modelAndView.addObject("topic", new Topic());
-        modelAndView.addObject("linkResource",new LinkResource());
+        modelAndView.addObject("linkResourceCo",new LinkResourceCo());
+        modelAndView.addObject("documentResourceCo",new DocumentResourceCo());
         modelAndView.setViewName("dashboard");
-        System.out.println(user1.getPhoto());
+        session.setAttribute("login", true);
+        session.setAttribute("userid", user1.getId());
         return modelAndView;
     }
 }

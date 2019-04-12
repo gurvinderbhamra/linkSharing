@@ -1,5 +1,7 @@
 package com.ttn.linkSharing.entities;
 
+import com.ttn.linkSharing.co.DocumentResourceCo;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -9,9 +11,11 @@ public class DocumentResource extends Resource {
 
     public DocumentResource(){ }
 
-    public DocumentResource(DocumentResource documentResource, Topic topic){
-        this.path = documentResource.getPath();
+    public DocumentResource(DocumentResourceCo documentResourceCo, Topic topic){
+        this.path = documentResourceCo.getPath().getOriginalFilename();
+        this.setDescription(documentResourceCo.getDescription());
         this.setTopic(topic);
+        this.setId(documentResourceCo.getId());
     }
 
     public String getPath() {

@@ -13,13 +13,11 @@ public class LinkResource extends Resource {
     @URL(message = "Invalid URL")
     private String link;
 
-    private String description;
-
     public LinkResource(){ }
 
     public LinkResource(LinkResourceCo linkResourceCo, Topic topic){
         this.link = linkResourceCo.getLink();
-        this.description = linkResourceCo.getDescription();
+        this.setDescription(linkResourceCo.getDescription());
         this.setTopic(topic);
     }
 
@@ -30,13 +28,4 @@ public class LinkResource extends Resource {
     public void setLink(String link) {
         this.link = link;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 }

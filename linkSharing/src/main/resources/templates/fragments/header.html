@@ -30,8 +30,8 @@
         <a href="#" class="ml-2"  data-toggle="modal" data-target="#createTopicModal"><i class="fas fa-comment-dots fa-lg"></i></a>
         <a href="#" class="ml-2" data-toggle="modal" data-target="#sendInvitation"><i class="fas fa-envelope-square fa-lg"></i></a>
         <a href="#" class="ml-2" data-toggle="modal" data-target="#shareLinkModal"><i class="fas fa-link fa-lg"></i></a>
-        <a href="#" class="ml-2" data-toggle="modal" data-target="shareDocumentModal"><i class="fas fa-sticky-note fa-lg"></i></a>
-        <a href="#" class="ml-5"><img th:src="${'images/' + user.getPhoto()}" height="40" width="40px" style="border-radius: 50%"></a>
+        <a href="#" class="ml-2" data-toggle="modal" data-target="#shareDocumentModal"><i class="fas fa-sticky-note fa-lg"></i></a>
+        <a href="#" class="ml-5"><img th:src="${'../images/' + user.getPhoto()}" height="40" width="40px" style="border-radius: 50%"></a>
         <div class="btn-group">
             <button type="button" class="btn btn-sm btn-dark text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span th:text="${user.getFirstName()}"></span>
@@ -182,50 +182,44 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <form method="post" style="font-family: fantasy">
+                            <form method="post" style="font-family: fantasy" action="/resource/create/document" ENCTYPE="multipart/form-data" th:object="${documentResourceCo}">
+                                <div class="modal-body">
+
                                     <div class="form-group row">
-                                        <label for="link"
+                                        <label for="path"
                                                class="col-md-4 col-form-label form-control-sm mb">Document*</label>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input type="file" name="BROWSE" class="form-control-file"
-                                                       id="exampleFormControlFile1" REQUIRED>
+                                                <input type="file" class="form-control-file" id="path" th:field="${documentResourceCo.path}"
+                                                       aria-describedby="inputGroupFileAddon01" name="path" required>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="descpription" class="col-md-4 col-form-label form-control-sm">Description*</label>
+                                        <label for="descpription1" class="col-md-4 col-form-label form-control-sm">Description*</label>
                                         <div>
-                                            <textarea class="form-control form-control-sm mt-2 ml-3" id="descpription1" rows="2"></textarea>
+                                            <textarea class="form-control form-control-sm mt-2 ml-3" id="descpription1" rows="2" th:field="${documentResourceCo.description}"></textarea>
 
                                         </div>
 
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="topic"
-                                               class="col-md-4 col-form-label form-control-sm">Topic*</label>
-                                        <!--dropdown-->
-                                        <div class="dropdown col-md-8" id="topic1">
-                                            <button class="btn btn-sm btn-primary dropdown-toggle mt-2 col-sm-6 form-control-sm"
-                                                    type="button" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                Select topic
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="topic">
-                                                <button class="dropdown-item" type="button">Topic1</button>
-                                                <button class="dropdown-item" type="button">Topic2</button>
-                                            </div>
-                                        </div>
+                                    <div class="form-group form-control-sm mt-2 ml-4">
+                                        <label for="topic">Select Topic*</label>
+                                        <select class="form-control form-control-sm bg-primary text-white ml-5" id="topic" th:field="${documentResourceCo.id}">
+                                            <option th:each="topics : ${user.getUserSubscriptions()}"
+                                                    th:value="${topics.getTopic().getId()}"
+                                                    th:text="${topics.getTopic().getTopicName()}"></option>
+                                        </select>
                                     </div>
-                                </form>
+
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-sm">Invite</button>
+                                <div class="modal-footer">
+                                <input type="submit" value="Share" name="Share" class="btn btn-primary btn-sm"/>
                                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel
                                 </button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
