@@ -49,7 +49,7 @@
 
                                     <div class="col-md-10">
                                         <div class="form-control-md ml-2" style="font-family: fantasy">
-                                            <a href="#" th:text="${userSubscription.getTopic().getTopicName()}">Topic</a>
+                                            <a href="#" th:href="@{'/topic/view/' + ${userSubscription.getTopic().getId()}}" th:text="${userSubscription.getTopic().getTopicName()}">Topic</a>
                                         </div>
                                         <div class="card-text form-control-sm"
                                              style="text-align: justify; font-family: fantasy">

@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/topic")
 public class TopicController {
 
     @Autowired
@@ -26,7 +25,7 @@ public class TopicController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/topic/create", method = RequestMethod.POST)
     public String createTopic(@Valid @ModelAttribute("topic") Topic topic, HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession(false);
@@ -46,19 +45,23 @@ public class TopicController {
         return "redirect:/dashboard";
     }
 
-    @RequestMapping("/view/{topicName}")
-    public String show(@PathVariable("topicName") String topicName, HttpSession session, Model model){
+    @RequestMapping("/topic/view/{topicId}")
+    public String show(@PathVariable("topicId") Long topicId, HttpSession session, Model model){
         if(session != null){
             if(session.getAttribute("userid") != null){
                 User user = userService.getUserById((Long) session.getAttribute("userid"));
-                addAttributes(model, user);
+                model.addAttribute("user", user);
+                model.addAttribute("topic", topicService.getTopicByTopicId(topicId));
+                model.addAttribute("linkResourceCo",new LinkResourceCo());
+                model.addAttribute("documentResourceCo",new DocumentResourceCo());
+                model.addAttribute("userTopics", topicService.countTopicsOfUser(user.getUsername()));
                 return "topic";
             }
         }
         return "redirect:/";
     }
 
-    @RequestMapping("/search")
+    @RequestMapping("/topic/search")
     public String search(HttpSession session, Model model){
         if(session != null){
             if(session.getAttribute("userid") != null){
