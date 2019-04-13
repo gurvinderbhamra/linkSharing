@@ -56,8 +56,26 @@ public class UserController {
         if(session != null) {
             User user1 = userService.getUserById((Long) session.getAttribute("userid"));
             addAttributes(model, user1);
-            if(user1 != null)
-                return "editProfile";
+            return "editProfile";
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/edit")
+    public String editUser(@ModelAttribute("user") User user, HttpSession session, Model model){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User existingUser = userService.getUserById((Long) session.getAttribute("userid"));
+
+                if(userService.updateUser(existingUser, user) != null){
+                    model.addAttribute("message", "User updated successfully");
+                }
+                else{
+                    model.addAttribute("message", "User updation failed, please try again");
+                }
+                addAttributes(model, existingUser);
+                return "redirect:/dashboard";
+            }
         }
         return "redirect:/";
     }

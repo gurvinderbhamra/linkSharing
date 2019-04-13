@@ -13,4 +13,7 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
     Optional<Topic> findByTopicName(String topicName);
 
     Integer countByCreatedByLike(String createdBy);
+    void deleteById(Long id);
+
+    boolean existsById(Long topicId);
 }

@@ -2,6 +2,7 @@ package com.ttn.linkSharing.controllers;
 
 import com.ttn.linkSharing.co.DocumentResourceCo;
 import com.ttn.linkSharing.co.LinkResourceCo;
+import com.ttn.linkSharing.co.TopicCo;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.TopicService;
@@ -71,6 +72,44 @@ public class TopicController {
             }
         }
         return "redirect:/";
+    }
+
+    @RequestMapping("/topic/edit/{id}")
+    public String editTopic(@Valid @ModelAttribute("topic") Topic topic, @PathVariable("id") Long topicId, HttpSession session, Model model){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                addAttributes(model, user);
+                Topic topic1 = topicService.getTopicByTopicId(topicId);
+                topic1.setTopicName(topic.getTopicName());
+                topic1.setVisibility(topic.getVisibility());
+
+                //update topic
+                topicService.createTopic(topic, user.getId());
+                return "redirect:/dashboard";
+            }
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/topic_deleted/{topicId}")
+    public String deleteTopic(@PathVariable Long topicId, HttpSession session, Model model){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                addAttributes(model, user);
+                if(topicService.deleteTopic(topicId)){
+                    model.addAttribute("message", "Topic Deleted successfully");
+                    return "redirect:/dashboard";
+
+                }
+                else {
+                    model.addAttribute("message", "Topic not deleted");
+                    return "redirect:/dashboard";
+                }
+            }
+        }
+        return "return:/";
     }
 
     private void addAttributes(Model model, User user){

@@ -16,4 +16,14 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(userId);
         return optionalUser.get();
     }
+
+    public User updateUser(User existingUser, User user){
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setUsername(user.getUsername());
+        if(user.getPhoto() != null){
+            existingUser.setPhoto(user.getPhoto());
+        }
+        return userRepository.save(existingUser);
+    }
 }

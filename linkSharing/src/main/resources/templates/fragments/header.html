@@ -31,7 +31,7 @@
         <a href="#" class="ml-2" data-toggle="modal" data-target="#sendInvitation"><i class="fas fa-envelope-square fa-lg"></i></a>
         <a href="#" class="ml-2" data-toggle="modal" data-target="#shareLinkModal"><i class="fas fa-link fa-lg"></i></a>
         <a href="#" class="ml-2" data-toggle="modal" data-target="#shareDocumentModal"><i class="fas fa-sticky-note fa-lg"></i></a>
-        <a href="#" class="ml-5"><img th:src="${'../images/' + user.getPhoto()}" height="40" width="40px" style="border-radius: 50%"></a>
+        <a href="#" class="ml-5"><img th:src="${'../../images/' + user.getPhoto()}" height="40" width="40px" style="border-radius: 50%"></a>
         <div class="btn-group">
             <button type="button" class="btn btn-sm btn-dark text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span th:text="${user.getFirstName()}"></span>

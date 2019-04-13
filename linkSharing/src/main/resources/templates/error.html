@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>error 404 for Website Template | 404Pagefree.com</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="//fonts.googleapis.com/css?family=Courgette" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+    <style>
+        .logo h1 {
+            font-size: 200px;
+            color: #8F8E8C;
+            text-align: center;
+            margin-bottom: 1px;
+            text-shadow: 1px 1px 6px #fff;
+        }
+        h1 {
+            display: block;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        body {
+            background-image: linear-gradient(to right, lightblue , white);
+            font-family: 'Courgette', cursive;
+        }
+    </style>
+</head>
+<body align="center">
+<div class="wrap">
+    <div class="logo">
+        <h1>404</h1>
+        <p>Error occurred! - File not Found</p>
+        <div class="sub">
+            <p th:text="${errorMsg}"></p>
+            <p><a href="/dashboard">Back</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -52,4 +52,9 @@ public class TopicService {
     public Integer countTopicsOfUser(String createdBy){
         return topicRepository.countByCreatedByLike(createdBy);
     }
+
+    public Boolean deleteTopic(Long topicId){
+        topicRepository.deleteById(topicId);
+        return topicRepository.existsById(topicId);
+    }
 }

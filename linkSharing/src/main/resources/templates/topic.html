@@ -53,7 +53,7 @@
                                              style="text-align: justify; font-family: fantasy">
                                             <div class="row mt-2">
                                                 <div class="col">
-                                                    <div class="p-0">@Username</div>
+                                                    <div class="p-0">@<span th:text="${topic.getCreatedBy()}"></span></div>
                                                     <div>
                                                         <a href="#">Unsubscribe</a>
                                                     </div>
@@ -61,13 +61,13 @@
                                                 <div class="col">
                                                     <div class="p-0">Subscriptions</div>
                                                     <div id="subscriptions-trendingTopics">
-                                                        <p th:name="subscrption">50</p>
+                                                        <p th:name="subscrption" th:text="${topic.getUserSubscriptions().size()}">50</p>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="p-0">Post</div>
                                                     <div>
-                                                        <p th:name="postNumber">3</p>
+                                                        <p th:name="postNumber" th:text="${topic.getResources().size()}">3</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -77,16 +77,13 @@
 
                                 <div class="row float-right">
                                     <div class="col dropdown show ml-2 float-right">
-                                        <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuTopic1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Very Serious
-                                        </a>
-
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="#">Serious</a>
-                                            <a class="dropdown-item" href="#">Casual</a>
-                                        </div>
-                                        <a href="#"><i class="far fa-envelope fa-lg mr-2"></i></a>
+                                        <select class="form-control form-control-sm bg-primary text-white ml-1" id="seriousnessSelect">
+                                            <option th:each="seriousness : ${T(com.ttn.linkSharing.enums.Seriousness).values()}"
+                                                    th:value="${seriousness}"
+                                                    th:text="${seriousness.getValue()}"></option>
+                                        </select>
                                     </div>
+                                    <a href="#"><i class="far fa-envelope fa-lg mr-4"></i></a>
                                 </div>
                             </div>
                         </div>
