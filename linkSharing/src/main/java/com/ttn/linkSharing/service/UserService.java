@@ -36,6 +36,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void updateActivation(User user){
+        userRepository.save(user);
+    }
+
     public List<User> searchUser(String search){
         return userRepository.searchUsers(search);
     }

@@ -32,7 +32,7 @@ public class LoginController {
     @PostMapping("/dashboard")
     public String login(@Valid @ModelAttribute("loginCo")LoginCo loginCo, BindingResult result, HttpServletRequest request, Model model){
         User user1 = loginService.login(loginCo.getUsername(), loginCo.getPassword());
-        if(user1 != null){
+        if(user1 != null && user1.getActive()){
             HttpSession session = request.getSession();
             session.setAttribute("login", true);
             session.setAttribute("userid", user1.getId());

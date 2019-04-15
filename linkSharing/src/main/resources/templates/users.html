@@ -39,7 +39,7 @@
                 <td th:text="${u.getFirstName()}"></td>
                 <td th:text="${u.getLastName()}"></td>
                 <td th:text="${u.getActive()}"></td>
-                <td><a href="#" th:text="${u.getActive()} == false ? ${'Activate'} : ${'Deactivate'}"></a></td>
+                <td><a th:href="@{'/activation/' + ${u.getId()}}" th:text="${u.getActive()} == false ? ${'Activate'} : ${'Deactivate'}"></a></td>
             </tr>
             </tbody>
         </table>
