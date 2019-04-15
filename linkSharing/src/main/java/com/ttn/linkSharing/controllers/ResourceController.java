@@ -67,7 +67,7 @@ public class ResourceController {
     }
 
     @RequestMapping("/resource/view/{id}")   //@PathVariable String id, {id}
-    public String viewResource(@PathVariable Long id, HttpSession session, Model model){
+    public String viewResource(@PathVariable("id") Long id, HttpSession session, Model model){
         if(session != null){
             if(session.getAttribute("userid") != null){
                 Long userid = (Long) session.getAttribute("userid");

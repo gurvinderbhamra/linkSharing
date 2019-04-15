@@ -18,53 +18,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-
-    <style>
-        #snackbar {
-            visibility: hidden; /* Hidden by default. Visible on click */
-            min-width: 250px; /* Set a default minimum width */
-            margin-left: -125px; /* Divide value of min-width by 2 */
-            background-color: #333; /* Black background color */
-            color: #fff; /* White text color */
-            text-align: center; /* Centered text */
-            border-radius: 2px; /* Rounded borders */
-            padding: 16px; /* Padding */
-            position: fixed; /* Sit on top of the screen */
-            z-index: 1; /* Add a z-index if needed */
-            left: 50%; /* Center the snackbar */
-            bottom: 30px; /* 30px from the bottom */
-        }
-
-        /* Show the snackbar when clicking on a button (class added with JavaScript) */
-        #snackbar.show {
-            visibility: visible; /* Show the snackbar */
-            /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-            However, delay the fade out process for 2.5 seconds */
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
-        /* Animations to fade the snackbar in and out */
-        @-webkit-keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
-        }
-
-        @keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
-        }
-
-        @-webkit-keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
-        }
-
-        @keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
-        }
-    </style>
 </head>
 
 <body>
@@ -134,7 +87,7 @@
                                             </div>
                                         </div>
                                         <input type="submit" class="btn btn-primary btn-sm col-5" value="Update"
-                                               style="float: right" data-toggle="modal" data-target="#updateSuccess" onclick="myFunction()">
+                                               style="float: right" data-toggle="modal" data-target="#updateSuccess">
                                     </form>
                                 </div>
 
@@ -152,27 +105,33 @@
                         <div class="row">
                             <div class="col">
                                 <div class="row p-0 m-0">
-                                    <form style="font-family: fantasy" method="post" ENCTYPE="multipart/form-data" class="col-11 mt-3 mb-3 ml-4">
+                                    <form style="font-family: fantasy" method="post" class="col-11 mt-3 mb-3 ml-4" action="/updatePassword" th:object="${passwordCo}">
                                         <div class="form-group row">
                                             <label for="password" class="col-md-4 col-form-label form-control-sm">Password* </label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control form-control-sm" id="password"
-                                                       name="firstName" placeholder="Password" required>
+                                                <input th:field="*{password}" type="password" class="form-control form-control-sm" id="password"
+                                                       name="password" placeholder="Password" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="confirm_password" class="col-md-4 col-form-label form-control-sm">Confirm
                                                 Password* </label>
                                             <div class="col-md-8">
-                                                <input type="password" class="form-control form-control-sm" id="confirm_password"
-                                                       name="lastName" placeholder="Confirm Password" required>
+                                                <input th:field="*{confirmPassword}" type="password" class="form-control form-control-sm" id="confirm_password"
+                                                       name="confirmPassword" placeholder="Confirm Password" required>
                                             </div>
                                         </div>
                                         <input type="submit" class="btn btn-primary btn-sm col-5" value="Update"
                                                style="float: right" data-toggle="modal" data-target="#changePassword">
                                     </form>
                                 </div>
-
+                                <div th:if="${passwordMessage} != null">
+                                    <div class="row p-1 m-1"
+                                         style="border: blue 1px solid; border-radius: 5px;
+                                         text-align: center;
+                                         background-color: #c1dfff; color: blue"
+                                         th:text="${passwordMessage}"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -184,13 +143,12 @@
     <!--footer-->
     <div th:include="~{fragments/footer}"></div>
 
-    <div id="snackbar" th:text="${message}">Some text some message..</div>
 </div>
 </body>
 </html>
 
 <script>
-    function myFunction() {
+    /*function myFunction() {
         // Get the snackbar DIV
         var x = document.getElementById("snackbar");
 
@@ -199,5 +157,5 @@
 
         // After 3 seconds, remove the show class from DIV
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-    }
+    }*/
 </script>

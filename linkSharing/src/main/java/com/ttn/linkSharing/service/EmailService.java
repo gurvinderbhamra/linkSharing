@@ -21,4 +21,13 @@ public class EmailService {
         helper.setSubject("Link Sharing Confirmation");
         sender.send(message);
     }
+
+    public void sendPasswormEmail(String email, String password) throws Exception{
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setTo(email);
+        helper.setText("Hi, please login with the following credentials and change the password.\n\n Email : " + email + "\n Password : " + password);
+        helper.setSubject("Link Sharing Forgot Password Mail");
+        sender.send(message);
+    }
 }

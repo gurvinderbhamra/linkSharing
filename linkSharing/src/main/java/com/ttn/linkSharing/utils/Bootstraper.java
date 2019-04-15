@@ -30,12 +30,22 @@ public class Bootstraper {
         User user = new User();
         user.setFirstName("Gurvinder");
         user.setLastName("Singh");
-        user.setEmail("gurvinder.singh@tothenew.com");
-        user.setUsername("admin");
-        user.setPassword("123");
-        user.setRole(Role.ADMIN);
+        user.setEmail("bhamra.gurvindersingh@gmail.com");
+        user.setUsername("gurvinder");
+        user.setPassword("123456");
+        user.setRole(Role.USER);
         user.setPhoto("user.png");
         userRepository.save(user);
+
+        User user1 = new User();
+        user1.setFirstName("Gurvinder");
+        user1.setLastName("Singh");
+        user1.setEmail("gurvinder.singh@tothenew.com");
+        user1.setUsername("admin");
+        user1.setPassword("aaa");
+        user1.setRole(Role.ADMIN);
+        user1.setPhoto("user.png");
+        userRepository.save(user1);
 
         Topic topic1 = new Topic();
         topic1.setTopicName("Java");

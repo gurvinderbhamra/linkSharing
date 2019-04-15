@@ -5,6 +5,7 @@ import com.ttn.linkSharing.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,10 @@ public class UserService {
         return optionalUser.get();
     }
 
+    public User getUserByEmail(String email){
+        return userRepository.findByUsernameOrEmail(email, email);
+    }
+
     public User updateUser(User existingUser, User user){
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
@@ -25,5 +30,17 @@ public class UserService {
             existingUser.setPhoto(user.getPhoto());
         }
         return userRepository.save(existingUser);
+    }
+
+    public User updatePassword(User user){
+        return userRepository.save(user);
+    }
+
+    public List<User> searchUser(String search){
+        return userRepository.searchUsers(search);
+    }
+
+    public Iterable<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }

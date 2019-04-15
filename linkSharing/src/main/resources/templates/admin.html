@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Link Sharing</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--nav bar-->
+    <nav class="navbar navbar-light bg-dark justify-content-between mr-5 ml-5 mt-2 mb-3 pr-5 pl-5 rounded">
+        <a class="navbar-brand">
+            <img src="images/icon.png" width="40px" height="40px">
+            <b style="color: white; font-family: 'fantasy'">Link Sharing</b>
+        </a>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2 form-control-sm" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit">Search</button>
+        </form>
+    </nav>
+
+    <div align="center">
+        <div class="well col-5" align="center">
+            <div class="card p-0" style="border: blue 1px solid">
+                <div class="card-header  p-2 bg-primary text-white">
+                    <b style="font-family: fantasy">Admin Login</b>
+                </div>
+                <div class="card-body">
+                    <form th:method="post" style="font-family: fantasy" action="/adminLogin" th:object="${user}">
+                        <div class="form-group row">
+                            <label for="username-login" class="col-md-4 col-form-label form-control-sm mb">Email/Username*</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control form-control-sm" name="username" th:field="*{username}"
+                                       id="username-login" placeholder="Username/Email" REQUIRED>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword"
+                                   class="col-md-4 col-form-label form-control-sm">Password*</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control form-control-sm" name="password"
+                                       id="inputPassword" placeholder="Password" REQUIRED>
+                            </div>
+                        </div>
+                        <input type="submit" class="col-md-5 btn btn-primary btn-sm" value="Login"
+                               style="float: right">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

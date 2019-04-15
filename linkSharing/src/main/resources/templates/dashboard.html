@@ -174,7 +174,7 @@
                                                th:text="${'@' + userResource.getUser().getUsername()}">
                                                 @userid
                                             </a>
-                                            <a href="#" th:text="${userResource.getResource().getTopic().getTopicName()}"
+                                            <a th:href="@{'/topic/view/' + ${userResource.getResource().getTopic().getId()}}" th:text="${userResource.getResource().getTopic().getTopicName()}"
                                                class="float-right">
                                                 Topic
                                             </a>
@@ -186,7 +186,7 @@
 
                                         <div class="row float-right mr-2">
                                             <a class="mr-3" href="#">Download</a>
-                                            <a class="mr-3" href="#">View full site</a>
+                                            <a class="mr-3" href="#">View full site</a>      <!--th:if="${userResource.getResource() instanceof T(com.ttn.linkSharing.entities.LinkResource)}" th:href="@{userResource.getResource().getLink()}"-->
                                             <a class="mr-3" href="#">Mark as read</a>
                                             <a th:href="@{'/resource/view/' + ${userResource.getResource().getId()}}">View post</a>
                                         </div>

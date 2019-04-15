@@ -2,6 +2,7 @@ package com.ttn.linkSharing.controllers;
 
 import com.ttn.linkSharing.co.DocumentResourceCo;
 import com.ttn.linkSharing.co.LinkResourceCo;
+import com.ttn.linkSharing.co.PasswordCo;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.service.TopicService;
@@ -45,11 +46,6 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping("/forgotPassword")
-    public String forgotPassword(){
-        return "Forgot Password Processing (password reset kro bhai)";
-    }
-
     @RequestMapping("/editProfile")
     public String editProfile(HttpServletRequest request, Model model){
         HttpSession session = request.getSession(false);
@@ -74,7 +70,7 @@ public class UserController {
                     model.addAttribute("message", "User updation failed, please try again");
                 }
                 addAttributes(model, existingUser);
-                return "redirect:/dashboard";
+                return "editProfile";
             }
         }
         return "redirect:/";
@@ -92,11 +88,34 @@ public class UserController {
         return "redirect:/";
     }
 
+    @RequestMapping("/updatePassword")
+    public String updatePassword(@ModelAttribute PasswordCo passwordCo, HttpSession session, Model model){
+        if (session != null) {
+            if (session.getAttribute("userid") != null) {
+                User user1 = userService.getUserById((Long) session.getAttribute("userid"));
+                addAttributes(model, user1);
+                if(passwordCo.getPassword().equals(passwordCo.getConfirmPassword())) {
+                    user1.setPassword(passwordCo.getPassword());
+                    user1.setConfirmPassword(passwordCo.getConfirmPassword());
+                    userService.updatePassword(user1);
+                    model.addAttribute("passwordMessage", "Password updated successfully");
+                    return "editProfile";
+                }
+                else{
+                    model.addAttribute("passwordMessage", "Please enter same password in both fields");
+                    return "editProfile";
+                }
+            }
+        }
+        return "redirect:/";
+    }
+
     private void addAttributes(Model model, User user){
         model.addAttribute("user", user);
         model.addAttribute("topic", new Topic());
         model.addAttribute("linkResourceCo",new LinkResourceCo());
         model.addAttribute("documentResourceCo",new DocumentResourceCo());
         model.addAttribute("userTopics", topicService.countTopicsOfUser(user.getUsername()));
+        model.addAttribute("passwordCo", new PasswordCo());
     }
 }

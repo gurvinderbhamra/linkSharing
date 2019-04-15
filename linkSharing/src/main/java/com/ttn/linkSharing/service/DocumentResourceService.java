@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 public class DocumentResourceService {
@@ -54,5 +55,9 @@ public class DocumentResourceService {
         documentResource.getUserResources().add(userResource);
 
         return documentResourceRepository.save(documentResource);
+    }
+
+    public List<DocumentResource> searchDocumentResource(String search){
+        return documentResourceRepository.searchDocument(search);
     }
 }

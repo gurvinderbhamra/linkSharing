@@ -41,13 +41,13 @@
                                 <div class="row">
                                     <div class="col-md-2">
 
-                                        <img src="images/user.png" alt="image" width="70px"
+                                        <img th:src="${'../../images/user.png'}" alt="image" width="70px"
                                              height="70px" style="border-radius: 50%">
                                     </div>
 
                                     <div class="col-md-10">
                                         <div class="form-control-md ml-2" style="font-family: fantasy">
-                                            <a th:href="@{'/topic/' + ${topic.getId()}}" th:text="${topic.getTopicName()}"></a>
+                                            <a th:href="@{'/topic/view/' + ${topic.getId()}}" th:text="${topic.getTopicName()}"></a>
                                         </div>
                                         <div class="card-text form-control-sm"
                                              style="text-align: justify; font-family: fantasy">
@@ -93,12 +93,12 @@
                 <!--users that has subscribed this topic-->
                 <div class="card mt-4" style="font-family: fantasy; border: blue 1px solid">
                     <div class="card-header bg-primary text-white p-2">
-                        <b>Users : <span>Topic Name</span></b>
+                        <b>Users : <span th:text="${topic.getTopicName()}"></span></b>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <a th:href="@{'/userProfile/' + ${user.getId()}}"><img th:src="${'../images/' + user.getPhoto()}" alt="profile-picture" width="100px" height="100px"></a>
+                                <a th:href="@{'/userProfile/' + ${user.getId()}}"><img th:src="${'../../images/' + user.getPhoto()}" alt="profile-picture" width="100px" height="100px"></a>
                             </div>
                             <div class="col-md-8 form-control-sm" style="font-family: fantasy">
                                 <div class="card-title mb-0">
@@ -133,11 +133,11 @@
                         <b>Posts : <span>Topic Name</span></b>
                     </div>
                     <div class="card-body p-2">
-                        <div class="row">
+                        <div class="row"  th:each="resource : ${topic.getResources()}">
                             <div class="col">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img src="images/user.png" alt="image" width="80px"
+                                        <img alt="image" width="80px"
                                              height="80px" style="border-radius: 50%">
                                     </div>
 
@@ -145,21 +145,22 @@
                                         <div class="form-control-md mr-1" style="font-family: fantasy">
                                             <b>Username</b>
                                             <a href="#">@userid</a>
-                                            <a href="#" class="float-right">Topic</a>
+                                            <a href="#" class="float-right" th:text="${resource.getTopic().getTopicName()}">Topic</a>   <!-- @{'/topic/view/' + resource.getTopic().getId()}-->
                                         </div>
                                         <div class="card-text form-control-sm p-0"
-                                             style="text-align: justify; font-family: fantasy">
+                                             style="text-align: justify; font-family: fantasy" th:text="${resource.getDescription()}">
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
                                             dolore dolores doloribus earum enim et excepturi facere fuga ipsa ipsu
                                         </div>
                                         <div class="row float-right mr-2">
-                                            <a class="mr-3" href="#">Download</a>
+                                            <a class="mr-3" href="#" download="">Download</a>
                                             <a class="mr-3" href="#">View full site</a>
                                             <a class="mr-3" href="#">Mark as read</a>
-                                            <a href="/resource">View post</a>
+                                            <a href="#">View post</a> <!--@{'/resource/view/' + resource.getId()}-->
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                             </div>
                         </div>
                     </div>

@@ -2,33 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Link Sharing</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>Title</title>
     <style>
-        .logo h1 {
-            font-size: 50px;
-            color: #8F8E8C;
-            text-align: center;
-            margin-bottom: 1px;
-            margin-top: 50px;
-            text-shadow: 1px 1px 6px #fff;
-        }
-        h1 {
-            display: block;
-            font-size: 2em;
-            font-weight: bold;
-        }
-        body {
-            background-image: linear-gradient(to right, #969eff, white);
-            font-family: fantasy;
-        }
-
         #snackbar {
             visibility: hidden; /* Hidden by default. Visible on click */
             min-width: 250px; /* Set a default minimum width */
@@ -75,23 +50,9 @@
         }
     </style>
 </head>
-<body alink="center">
-<div class="wrap">
-    <div class="logo">
-        <h1>Forgot Password</h1>
-        <div class="sub p-2 m-2" align="center">
-            <form action="/forgotPasswordButton">
-                <p class="p-2">
-                    <i>Enter username/email :</i>
-                    <input class="ml-4" type="text" name="email" placeholder="Username or email" autocomplete="off" required/>
-                </p>
-                <input type="submit" value="Submit" name="submit" class="btn col-3 bg-primary text-white" onclick="myFunction()"/>
-            </form>
-            <div class="col-3 mt-5" th:if="${message} != null">
-                <div th:text="${message}"></div>
-            </div>
-        </div>
-    </div>
+<body>
+<div th:fragment="user_card">
+    <div id="snackbar" th:if="${message} != null" th:text="${message}" onload="myFunction()"></div>
 </div>
 </body>
 </html>

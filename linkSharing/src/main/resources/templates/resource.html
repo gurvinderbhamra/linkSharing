@@ -80,8 +80,8 @@
                                     <a href="#" class="float-right">Details</a>
                                 </div>
                                 <div class="col-md-12 pr-0 p-0 m-0">
-                                    <a href="/userProfile" th:text="${'@' + user.getUsername()}"></a>
-                                    <p class="float-right text-secondary">Creation timestamp</p>
+                                    <a href="/userProfile/1" th:text="${'@' + user.getUsername()}"></a>  <!--th:href="@{'/userProfile/' + user.getId()}"-->
+                                    <p class="float-right text-secondary" th:text="${'15/04/2019'}"></p>
                                 </div>
                                 <div class="col-md-12 pr-0 float-right m-0 p-0">
                                     <div class="stars float-right mt-0 pt-0">
@@ -101,16 +101,21 @@
                                 </div>
                             </div>
                             <div class="form-control-sm col-12 pt-0"
-                                 style="text-align: justify">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
-                                dolore dolores doloribus earum enim et excepturi facere fuga ipsa ipsu
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
-                                dolore dolores doloribus earum enim et excepturi facere fuga ipsa ipsu
+                                 style="text-align: justify" id="resourceDescription">
+                                Resource Description
                             </div>
-                            <div class="col-12 float-right">
+                            <div class="form-control-sm col-12 pt-0"
+                                 style="text-align: justify; display: none;" id="editResourceDescription">
+                                <form>
+                                    <textarea class="col-12" rows="2" name="description" placeholder="" th:text="$"></textarea>
+                                    <input id="#editButton" type="submit" value="Edit" class="btn btn-sm bg-primary float-right text-white col-2 ml-2"/>
+                                    <input type="button" value="Cancel" name="Cancel" class="btn btn-sm bg-primary float-right text-white col-2"/>
+                                </form>
+                            </div>
+                            <div class="col-12 float-right" id="hyperlinks">
                                 <span class="float-right form-control-sm">
                                     <a href="#" class="ml-2">Delete</a>
-                                    <a href="#" class="ml-2">Edit</a>
+                                    <a href="#" class="ml-2" id="editResourceHyperlink">Edit</a>
                                     <a href="#" class="ml-2">Download</a>
                                     <a href="#" class="ml-2">View full site</a>
                                 </span>
@@ -122,7 +127,7 @@
 
             </div>
 
-            <!--login and register-->
+            <!--trending topics-->
             <div class="col-md-4 mr-5">
 
                 <div th:include="~{fragments/trending_topics}"></div>
@@ -136,3 +141,18 @@
 </div>
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $('#editResourceHyperlink').on('click', function () {
+            $('#editResourceDescription').css('display', 'block');
+            $('#resourceDescription').css('display', 'none');
+            $('#hyperlinks').css('display', 'none');
+        });
+        $('#editButton').on('click', function () {
+            $('#editResourceDescription').css('display', 'none');
+            $('#resourceDescription').css('display', 'block');
+            $('#hyperlinks').css('display', 'block');
+        });
+    })
+</script>

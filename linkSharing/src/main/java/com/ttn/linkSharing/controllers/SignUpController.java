@@ -54,14 +54,17 @@ public class SignUpController {
                 e.printStackTrace();
             }
         }).start();
-
-        modelAndView.addObject("user", user1);
-        modelAndView.addObject("topic", new Topic());
-        modelAndView.addObject("linkResourceCo",new LinkResourceCo());
-        modelAndView.addObject("documentResourceCo",new DocumentResourceCo());
+        addObject(modelAndView, user1);
         modelAndView.setViewName("dashboard");
         session.setAttribute("login", true);
         session.setAttribute("userid", user1.getId());
         return modelAndView;
+    }
+
+    private void addObject(ModelAndView modelAndView, User user){
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("topic", new Topic());
+        modelAndView.addObject("linkResourceCo",new LinkResourceCo());
+        modelAndView.addObject("documentResourceCo",new DocumentResourceCo());
     }
 }

@@ -57,4 +57,8 @@ public class TopicService {
         topicRepository.deleteById(topicId);
         return topicRepository.existsById(topicId);
     }
+
+    public List<Topic> searchTopics(String search){
+        return topicRepository.findTopics(search);
+    }
 }

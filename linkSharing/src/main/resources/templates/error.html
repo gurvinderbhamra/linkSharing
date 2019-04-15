@@ -28,7 +28,7 @@
 <body align="center">
 <div class="wrap">
     <div class="logo">
-        <h1>404</h1>
+        <h1 th:text="${errorNumber}">404</h1>
         <p>Error occurred! - File not Found</p>
         <div class="sub">
             <p th:text="${errorMsg}"></p>

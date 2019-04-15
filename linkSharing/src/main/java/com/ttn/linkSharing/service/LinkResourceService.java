@@ -9,6 +9,7 @@ import com.ttn.linkSharing.repositories.LinkResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +45,9 @@ public class LinkResourceService {
         linkResource.getUserResources().add(userResource);
 
         return linkResourceRepository.save(linkResource);
+    }
+
+    public List<LinkResource> searchLinkResource(String search){
+        return linkResourceRepository.searchLinkResource(search);
     }
 }
