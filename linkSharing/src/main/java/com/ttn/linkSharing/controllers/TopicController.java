@@ -112,6 +112,54 @@ public class TopicController {
         return "return:/";
     }
 
+    @PostMapping("/changeSeriousness")
+    @ResponseBody
+    public String changeSeriousness(@RequestParam("userSubscriptionId") Long userSubscriptionId,
+                                    @RequestParam("topicId") Long topicId,
+                                    @RequestParam("choosedSeriousness") String choosedSeriousness,
+                                    HttpSession session){
+        if(session != null) {
+            if (session.getAttribute("userid") != null) {
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                Boolean result = topicService.changeSeriousness(userSubscriptionId, choosedSeriousness);
+                System.out.println(choosedSeriousness + topicId);
+                if (result) {
+                    System.out.println(choosedSeriousness + "2");
+                    return "success";
+                } else {
+                    System.out.println(choosedSeriousness + "3");
+                    return "error";
+                }
+            } else {
+                return "error";
+            }
+        }
+        else{
+            return "error";
+        }
+
+    }
+
+    @PostMapping("/changeVisibility")
+    @ResponseBody
+    public String changeVisibility(@RequestParam("topicId") Long topicId,
+                                   @RequestParam("choosedVisibility") String choosedVisibility,
+                                   HttpSession session){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                Boolean result = topicService.changeVisibility(topicService.getTopicByTopicId(topicId), choosedVisibility);
+                if(result){
+                    return "success";
+                }
+                else{
+                    return "error";
+                }
+            }
+        }
+        return "error";
+    }
+
     private void addAttributes(Model model, User user){
         model.addAttribute("user", user);
         model.addAttribute("topic", new Topic());

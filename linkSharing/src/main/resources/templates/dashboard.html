@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
           crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -78,16 +77,20 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col dropdown show ml-2">
-                                        <select class="form-control form-control-sm bg-primary text-white ml-1" id="seriousnessSelect">
+                                    <div class="col dropdown show ml-2" id="seriousnessDropdown">
+                                        <select class="form-control form-control-sm bg-primary text-white ml-1" id="seriousnessSelect"
+                                                th:data-userSubscriptionId="${userSubscription.getId()}" th:data-topicId="${userSubscription.getTopic().getId()}">
+                                            <option th:text="${userSubscription.getSeriousness()}" selected></option>
                                             <option th:each="seriousness : ${T(com.ttn.linkSharing.enums.Seriousness).values()}"
                                                     th:value="${seriousness}"
                                                     th:text="${seriousness.getValue()}"></option>
                                         </select>
                                     </div>
 
-                                    <div class="col dropdown show m-0">
-                                        <select class="form-control form-control-sm bg-primary text-white ml-1" id="exampleFormControlSelect1">
+                                    <div class="col dropdown show m-0" id="visbilityDropdown">
+                                        <select class="form-control form-control-sm bg-primary text-white ml-1" id="visbilitySelect"
+                                                th:data-topicId="${userSubscription.getTopic().getId()}">
+                                            <option th:text="${userSubscription.getTopic().getVisibility().getValue().toUpperCase()}" selected></option>
                                             <option th:each="visibility : ${T(com.ttn.linkSharing.enums.Visibility).values()}"
                                                     th:value="${visibility}"
                                                     th:text="${visibility.getValue()}"></option>
@@ -208,8 +211,44 @@
 
 <script>
     $(document).ready(function(){
+        $("#seriousnessDropdown #seriousnessSelect").on("change", function () {
+            let seriousness = $(this);
+            let userSubscriptionId = seriousness.attr("data-userSubscriptionId");
+            let topicId = seriousness.attr("data-topicId");
+            let choosedSeriousness = $('option:selected', $(this)).text();
 
-    })
+            $.ajax({
+                method:"POST",
+                url:"/changeSeriousness",
+                data:{userSubscriptionId : userSubscriptionId, topicId : topicId, choosedSeriousness : choosedSeriousness}
+            }).done(function (data) {
+                if(data == "success"){
+                    alert("Seriousness changed");
+                }
+                else{
+                    alert("Cannot change seriousness");
+                }
+            }).fail(function () {
+            });
+
+        });
+
+        $("#visbilityDropdown #visbilitySelect").on("change", function () {
+            let visibility = $(this);
+            let topicId = visibility.attr("data-topicId");
+            let choosedVisibility = $('option:selected', $(this)).text();
+
+            $.ajax({
+                method:"POST",
+                url:"/changeVisibility",
+                data:{topicId : topicId, choosedVisibility : choosedVisibility}
+            }).done(function (data) {
+                alert("Visibility Changed");
+            }).fail(function () {
+
+            });
+        });
+    });
 </script>
 
 </html>

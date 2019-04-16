@@ -25,6 +25,7 @@ public class AdminController {
         model.addAttribute("user", new LoginCo());
         if (session != null) {
             if (session.getAttribute("admin") != null) {
+                addAttributes(model, userService.getUserByEmail((String) session.getAttribute("admin")));
                 return "users";
             }
         }
@@ -37,7 +38,7 @@ public class AdminController {
         String password = loginCo.getPassword();
         if (username.equals("admin") && password.equals("aaa")) {
             session.setAttribute("admin", username);
-            addAttributes(model, userService.getUserByEmail(username));
+            addAttributes(model, userService.getUserByEmail((String) session.getAttribute("admin")));
             return "users";
         }
         model.addAttribute("user", new LoginCo());

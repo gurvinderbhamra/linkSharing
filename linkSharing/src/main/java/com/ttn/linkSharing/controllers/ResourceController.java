@@ -73,11 +73,40 @@ public class ResourceController {
                 Long userid = (Long) session.getAttribute("userid");
                 User user = userService.getUserById(userid);
                 addAttributes(model, user);
-                model.addAttribute("resourceId", id);
+                model.addAttribute("resource", resourceService.getResourceById(id));
                 return "resource";
             }
         }
         return "redirect:/dashboard";
+    }
+
+    @RequestMapping("/editResource/{id}")
+    public String editResource(@PathVariable("id") Long id, @RequestParam("description") String description, HttpSession session, Model model){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                Resource resource = resourceService.getResourceById(id);
+                resource.setDescription(description);
+                resourceService.updateResource(resource);
+                addAttributes(model, user);
+                return "redirect:/resource/view/" + id;
+            }
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/delete/resource/{id}")
+    public String deleteResource(@PathVariable("id") Long id, HttpSession session, Model model) {
+        if (session != null) {
+            if (session.getAttribute("userid") != null) {
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                Resource resource = resourceService.getResourceById(id);
+                resourceService.delete(resource);
+                addAttributes(model, user);
+                return "redirect:/dashboard";
+            }
+        }
+        return "redirect:/";
     }
 
     private Model addAttributes(Model model, User user){

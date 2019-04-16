@@ -4,6 +4,7 @@ import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
 import com.ttn.linkSharing.entities.UserSubscription;
 import com.ttn.linkSharing.enums.Seriousness;
+import com.ttn.linkSharing.enums.Visibility;
 import com.ttn.linkSharing.repositories.TopicRepository;
 import com.ttn.linkSharing.repositories.UserSubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,33 @@ public class TopicService {
     public Boolean deleteTopic(Long topicId){
         topicRepository.deleteById(topicId);
         return topicRepository.existsById(topicId);
+    }
+
+    public Boolean changeSeriousness(Long userSubscriptionId, String choosedSeriousness){
+        UserSubscription userSubscription = userSubscriptionRepository.findById(userSubscriptionId).get();
+
+        String selectedSeriousness = Seriousness.valueOf(choosedSeriousness.toUpperCase()).toString();
+
+        Seriousness  seriousness = Seriousness.valueOf(selectedSeriousness.toUpperCase());
+
+        if(selectedSeriousness.isEmpty()){
+            return false;
+        }
+        else{
+            userSubscription.setSeriousness(seriousness);
+            userSubscriptionRepository.save(userSubscription);
+            return  true;
+        }
+    }
+
+    public Boolean changeVisibility(Topic topic, String choosedVisibility){
+        Visibility visibility = Visibility.valueOf(choosedVisibility.toUpperCase());
+        if(choosedVisibility.isEmpty())return false;
+        else{
+            topic.setVisibility(visibility);
+            topicRepository.save(topic);
+            return true;
+        }
     }
 
     public List<Topic> searchTopics(String search){
