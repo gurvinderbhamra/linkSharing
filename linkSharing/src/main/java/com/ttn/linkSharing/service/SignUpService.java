@@ -22,7 +22,10 @@ public class SignUpService {
     private static final String UPLOAD_FILE = "/home/ttn/LinkSharing/linkSharing/out/production/resources/static/images/";
 
     public User createUser(@Valid @ModelAttribute User user, MultipartFile file) throws IOException {
-        if (file.equals(null) || file.isEmpty()) {
+        if(checkUser(user)){
+            return null;
+        }
+        if (file.isEmpty()) {
             user.setPhoto(user.getUsername() + "_" + "user.png");
         }
         user.setActive(true);
@@ -36,5 +39,9 @@ public class SignUpService {
         }
         userRepository.save(user);
         return user;
+    }
+
+    public Boolean checkUser(User user1){
+        return userRepository.existsByUsernameOrEmail(user1.getUsername(), user1.getEmail());
     }
 }

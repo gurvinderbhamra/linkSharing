@@ -33,6 +33,7 @@ public class LinkResourceService {
         User user = userService.getUserById(userid);
 
         LinkResource linkResource = new LinkResource(linkResourceCo, topicService.getTopicByTopicId(linkResourceCo.getId()));
+        linkResource.setUser(user);
         Topic topic = topicService.getTopicByName(linkResource.getTopic().getTopicName());
 
         UserResource userResource = new UserResource();

@@ -76,6 +76,10 @@ public class TopicService {
         }
     }
 
+    public Topic getTrendingTopic(){
+        return topicRepository.getTrendingTopic().get();
+    }
+
     public Boolean changeVisibility(Topic topic, String choosedVisibility){
         Visibility visibility = Visibility.valueOf(choosedVisibility.toUpperCase());
         if(choosedVisibility.isEmpty())return false;
@@ -84,6 +88,24 @@ public class TopicService {
             topicRepository.save(topic);
             return true;
         }
+    }
+
+    public boolean subscribeTopic(User user, Topic topic){
+        UserSubscription userSubscription = new UserSubscription();
+        userSubscription.setSeriousness(Seriousness.CASUAL);
+        userSubscription.setTopic(topic);
+        userSubscription.setUser(user);
+        boolean flag = false;
+        if(!user.getUserSubscriptions().contains(topic)) {
+            flag = user.getUserSubscriptions().add(userSubscription);
+        }
+        userSubscriptionRepository.save(userSubscription);
+        for(UserSubscription userSubscription1 : user.getUserSubscriptions()){
+            System.out.println(userSubscription1.getTopic().getTopicName());
+        }
+        if(flag)
+            return true;
+        return false;
     }
 
     public List<Topic> searchTopics(String search){

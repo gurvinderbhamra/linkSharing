@@ -5,15 +5,15 @@ import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.co.SignupCo;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
+import com.ttn.linkSharing.entities.UserSubscription;
 import com.ttn.linkSharing.service.EmailService;
 import com.ttn.linkSharing.service.LoginService;
 import com.ttn.linkSharing.service.SignUpService;
+import com.ttn.linkSharing.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,8 +32,11 @@ public class SignUpController {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    TopicService topicService;
+
     @PostMapping("/registerUser")
-    ModelAndView signUp(@Valid @ModelAttribute("signupCo") SignupCo signupCo, BindingResult result, @RequestParam("photoPath") MultipartFile file, HttpSession session) throws Exception {
+    public ModelAndView signUp(@Valid @ModelAttribute("signupCo") SignupCo signupCo, BindingResult result, @RequestParam("photoPath") MultipartFile file, HttpSession session) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         if(result.hasErrors()){
             modelAndView.addObject("signUpError", result.getAllErrors());
@@ -64,6 +67,9 @@ public class SignUpController {
     private void addObject(ModelAndView modelAndView, User user){
         modelAndView.addObject("user", user);
         modelAndView.addObject("topic", new Topic());
+        Topic trendingTopic = topicService.getTrendingTopic();
+        modelAndView.addObject("trendingTopic", trendingTopic);
+        modelAndView.addObject("userSubscriptionTrendingTopic", new UserSubscription(trendingTopic));
         modelAndView.addObject("linkResourceCo",new LinkResourceCo());
         modelAndView.addObject("documentResourceCo",new DocumentResourceCo());
     }

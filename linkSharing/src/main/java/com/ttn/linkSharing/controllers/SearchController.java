@@ -53,6 +53,8 @@ public class SearchController {
         model.addAttribute("topic", new Topic());
         model.addAttribute("linkResourceCo",new LinkResourceCo());
         model.addAttribute("documentResourceCo",new DocumentResourceCo());
+        Topic trendingTopic = topicService.getTrendingTopic();
+        model.addAttribute("trendingTopic", trendingTopic);
 //        model.addAttribute("userTopics", topicService.countTopicsOfUser(user.getUsername()));
 //        model.addAttribute("passwordCo", new PasswordCo());
     }

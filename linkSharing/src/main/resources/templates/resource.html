@@ -70,17 +70,17 @@
                         <!--single post-->
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="../images/user.png" th:src="${'../../images/' + user.getPhoto()}" alt="image" width="80px"
+                                <img th:src="${'../../images/' + resource.getUser().getPhoto()}" alt="image" width="80px"
                                      height="80px" style="border-radius: 50%">
                             </div>
 
                             <div class="col-md-10">
                                 <div class="form-control-md" style="font-family: fantasy">
-                                    <a href="/userProfile" th:text="${user.getFirstName()}"><b>Username</b></a>
-                                    <a href="#" class="float-right">Details</a>
+                                    <a th:href="@{'/userProfile/' + ${resource.getUser().getId()}}" th:text="${resource.getUser().getFirstName() + ' ' + resource.getUser().getLastName()}"><b>Username</b></a>
+                                    <!--<a href="#" class="float-right">Details</a>-->
                                 </div>
                                 <div class="col-md-12 pr-0 p-0 m-0">
-                                    <a href="/userProfile/1" th:text="${'@' + user.getUsername()}"></a>  <!--th:href="@{'/userProfile/' + user.getId()}"-->
+                                    <a th:href="@{'/userProfile/' + ${resource.getUser().getId()}}" th:text="${'@' + resource.getUser().getUsername()}"></a>  <!--th:href="@{'/userProfile/' + user.getId()}"-->
                                     <p class="float-right text-secondary" th:text="${resource.getResourceCreatedOn()}"></p>
                                 </div>
                                 <div class="col-md-12 pr-0 float-right m-0 p-0">
@@ -114,10 +114,10 @@
                             </div>
                             <div class="col-12 float-right" id="hyperlinks">
                                 <span class="float-right form-control-sm">
-                                    <a th:href="@{'/delete/resource/' + ${resource.getId()}}" class="ml-2">Delete</a>
-                                    <a href="#" class="ml-2" id="editResourceHyperlink">Edit</a>
-                                    <a href="#" class="ml-2">Download</a>
-                                    <a href="#" class="ml-2">View full site</a>
+                                    <a th:if="${resource.getUser().getUsername()} == ${user.getUsername()}" th:href="@{'/delete/resource/' + ${resource.getId()}}" class="ml-2" title="Delete">Delete</a>
+                                    <a th:if="${resource.getUser().getUsername()} == ${user.getUsername()}" href="#" class="ml-2" id="editResourceHyperlink" title="Edit">Edit</a>
+                                    <!--<a href="#" class="ml-2">Download</a>-->
+                                    <a th:href="@{${resource.getLink() == null ? '' : resource.getLink()}}" class="ml-2" title="View full site">View full site</a>
                                 </span>
                             </div>
                         </div>
@@ -149,12 +149,12 @@
             $('#resourceDescription').css('display', 'none');
             $('#hyperlinks').css('display', 'none');
         });
-        $('#editButton').on('click', function () {
+        $('#editButton').click(function () {
             $('#editResourceDescription').css('display', 'none');
             $('#resourceDescription').css('display', 'block');
             $('#hyperlinks').css('display', 'block');
         });
-        $('#cancelButton').on('click', function () {
+        $('#cancelButton').click(function () {
             $('#editResourceDescription').css('display', 'none');
             $('#resourceDescription').css('display', 'block');
             $('#hyperlinks').css('display', 'block');

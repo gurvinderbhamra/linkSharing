@@ -19,4 +19,8 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
 
     @Query("select t from Topic t where t.topicName like %:searchText%")
     List<Topic> findTopics(@Param("searchText") String searchText);
+
+    @Query(value = "select * from topic where id = (select topic_id from (select topic_id, COUNT(topic_id) as count1 from link_resource as t1  group by topic_id) as temp order by count1 desc limit 1)",
+            nativeQuery = true)
+    Optional<Topic> getTrendingTopic();
 }

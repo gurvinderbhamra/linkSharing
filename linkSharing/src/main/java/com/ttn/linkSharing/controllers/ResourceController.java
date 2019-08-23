@@ -4,10 +4,7 @@ import com.ttn.linkSharing.co.DocumentResourceCo;
 import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.dto.ResourceDTO;
 import com.ttn.linkSharing.entities.*;
-import com.ttn.linkSharing.service.DocumentResourceService;
-import com.ttn.linkSharing.service.LinkResourceService;
-import com.ttn.linkSharing.service.ResourceService;
-import com.ttn.linkSharing.service.UserService;
+import com.ttn.linkSharing.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +28,9 @@ public class ResourceController {
 
     @Autowired
     DocumentResourceService documentResourceService;
+
+    @Autowired
+    TopicService topicService;
 
     @RequestMapping("/resource/create/link")
     public String createLinkResource(@Valid @ModelAttribute("linkResourceCo") LinkResourceCo linkResourceCo,
@@ -111,6 +111,8 @@ public class ResourceController {
 
     private Model addAttributes(Model model, User user){
         model.addAttribute("user", user);
+        Topic trendingTopic = topicService.getTrendingTopic();
+        model.addAttribute("trendingTopic", trendingTopic);
         model.addAttribute("topic", new Topic());
         model.addAttribute("linkResourceCo", new LinkResourceCo());
         model.addAttribute("documentResourceCo", new DocumentResourceCo());

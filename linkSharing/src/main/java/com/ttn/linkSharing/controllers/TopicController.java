@@ -5,6 +5,8 @@ import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.co.TopicCo;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
+import com.ttn.linkSharing.entities.UserSubscription;
+import com.ttn.linkSharing.service.EmailService;
 import com.ttn.linkSharing.service.TopicService;
 import com.ttn.linkSharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class TopicController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "/topic/create", method = RequestMethod.POST)
     public String createTopic(@Valid @ModelAttribute("topic") Topic topic, HttpServletRequest request, Model model){
@@ -120,7 +125,7 @@ public class TopicController {
                                     HttpSession session){
         if(session != null) {
             if (session.getAttribute("userid") != null) {
-                User user = userService.getUserById((Long) session.getAttribute("userid"));
+//                User user = userService.getUserById((Long) session.getAttribute("userid"));
                 Boolean result = topicService.changeSeriousness(userSubscriptionId, choosedSeriousness);
                 System.out.println(choosedSeriousness + topicId);
                 if (result) {
@@ -147,7 +152,7 @@ public class TopicController {
                                    HttpSession session){
         if(session != null){
             if(session.getAttribute("userid") != null){
-                User user = userService.getUserById((Long) session.getAttribute("userid"));
+//                User user = userService.getUserById((Long) session.getAttribute("userid"));
                 Boolean result = topicService.changeVisibility(topicService.getTopicByTopicId(topicId), choosedVisibility);
                 if(result){
                     return "success";
@@ -160,11 +165,59 @@ public class TopicController {
         return "error";
     }
 
+    @GetMapping("/topic/view/subscribe")
+    @ResponseBody
+    public String subscribeTopic(@RequestParam("topicId") Long topicId, HttpSession session){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+                Topic topic = topicService.getTopicByTopicId(topicId);
+
+                System.out.println(topic.getTopicName());
+                System.out.println(user.getUsername());
+
+                if(topicService.subscribeTopic(user, topic))
+                {
+                    return "success";
+                }
+                return "error";
+            }
+        }
+        return "error";
+    }
+
     private void addAttributes(Model model, User user){
         model.addAttribute("user", user);
-        model.addAttribute("topic", new Topic());
+        Topic topic = new Topic();
+        model.addAttribute("topic", topic);
+        Topic trendingTopic = topicService.getTrendingTopic();
+        model.addAttribute("trendingTopic", trendingTopic);
+        model.addAttribute("userSubscriptionTrendingTopic", new UserSubscription(trendingTopic));
+        model.addAttribute("userSubscriptionTopic", new UserSubscription(topic));
         model.addAttribute("linkResourceCo",new LinkResourceCo());
         model.addAttribute("documentResourceCo",new DocumentResourceCo());
         model.addAttribute("userTopics", topicService.countTopicsOfUser(user.getUsername()));
+    }
+
+    @PostMapping("/send_invitation")
+    public String sendInvitation(@RequestParam String invitationEmail,
+                                 @RequestParam Long topicId,
+                                 HttpSession session,
+                                 Model model){
+        if(session != null){
+            if(session.getAttribute("userid") != null){
+                User user = userService.getUserById((Long) session.getAttribute("userid"));
+
+                new Thread(()->{
+                    emailService.sendInvitation(user, invitationEmail, topicService.getTopicByTopicId(topicId));
+                }).start();
+
+                addAttributes(model, user);
+                model.addAttribute("message", "Invitation Sent Successfully");
+                return "dashboard";
+            }
+        }
+        return "redirect:/";
     }
 }

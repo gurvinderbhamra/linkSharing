@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Topic</title>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+          <!--integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"-->
+          <!--crossorigin="anonymous">-->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"-->
+          <!--integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"-->
+          <!--crossorigin="anonymous">-->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"-->
+            <!--integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"-->
+            <!--integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"-->
+            <!--integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"-->
+            <!--crossorigin="anonymous"></script>-->
+<!--</head>-->
 <head>
     <meta charset="UTF-8">
-    <title>Topic</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
           crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -19,7 +37,6 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 </head>
-
 <body>
 <div class="container-fluid">
 
@@ -30,8 +47,8 @@
         <div class="row">
             <div class="col-md-4 ml-5">
 
-                <!--topics-->
-                <div class="card mt-4" style="font-family: fantasy; border: blue 1px solid">
+                <!--topic-->
+                <div class="card" style="font-family: fantasy; border: blue 1px solid">
                     <div class="card-header bg-primary text-white p-2">
                         <b>Topic : <span th:text="${topic.getTopicName()}"></span></b>
                     </div>
@@ -39,13 +56,13 @@
                         <div class="row">
                             <div class="col">
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <!--<div class="col-md-2">-->
 
-                                        <img th:src="${'../../images/user.png'}" alt="image" width="70px"
-                                             height="70px" style="border-radius: 50%">
-                                    </div>
+                                        <!--<img th:src="${'../../images/' }" alt="image" width="70px"-->
+                                             <!--height="70px" style="border-radius: 50%">-->
+                                    <!--</div>-->
 
-                                    <div class="col-md-10">
+                                    <div class="col-md-12">
                                         <div class="form-control-md ml-2" style="font-family: fantasy">
                                             <a th:href="@{'/topic/view/' + ${topic.getId()}}" th:text="${topic.getTopicName()}"></a>
                                         </div>
@@ -54,8 +71,8 @@
                                             <div class="row mt-2">
                                                 <div class="col">
                                                     <div class="p-0">@<span th:text="${topic.getCreatedBy()}"></span></div>
-                                                    <div>
-                                                        <a href="#">Unsubscribe</a>
+                                                    <div th:if="${topic.getCreatedBy() != user.getUsername()}">
+                                                        <a href="#" th:text="${user.getUserSubscriptions().contains(topic) ? 'Unsubscribe' : 'Subscribe'}" th:data-topicId="${topic.getId()}" id="subscribeButton"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -96,28 +113,27 @@
                         <b>Users : <span th:text="${topic.getTopicName()}"></span></b>
                     </div>
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row" th:each="userSubscription : ${topic.getUserSubscriptions()}">
                             <div class="col-md-4">
-                                <a th:href="@{'/userProfile/' + ${user.getId()}}"><img th:src="${'../../images/' + user.getPhoto()}" alt="profile-picture" width="100px" height="100px"></a>
+                                <a th:href="@{'/userProfile/' + ${userSubscription.getUser().getId()}}"><img th:src="${'../../images/' + userSubscription.getUser().getPhoto()}" alt="profile-picture" width="100px" height="100px"></a>
                             </div>
                             <div class="col-md-8 form-control-sm" style="font-family: fantasy">
                                 <div class="card-title mb-0">
-                                    <a th:href="@{'/userProfile/' + ${user.getId()}}"><b><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"></span></b></a>
+                                    <a th:href="@{'/userProfile/' + ${userSubscription.getUser().getId()}}"><b><span th:text="${userSubscription.getUser().getFirstName() + ' ' + userSubscription.getUser().getLastName()}"></span></b></a>
                                 </div>
                                 <div class="card-text mt-0">
-                                    <a th:href="@{'/userProfile/' + ${user.getId()}}">@<span th:text="${user.getUsername()}"></span></a>
+                                    <a th:href="@{'/userProfile/' + ${userSubscription.getUser().getId()}}">@<span th:text="${userSubscription.getUser().getUsername()}"></span></a>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 card-text mt-3">
                                         <p class="m-0 p-0">Subscriptions</p>
-                                        <p class="m-0 p-0" th:text="${user.getUserSubscriptions().size()}">50</p>
+                                        <p class="m-0 p-0" th:text="${userSubscription.getUser().getUserSubscriptions().size()}">50</p>
                                     </div>
                                     <div class="col-6 card-text mt-3">
                                         <p class="m-0 p-0">Topics</p>
-                                        <p class="m-0 p-0" th:text="${user.getUserSubscriptions().size()}">null</p>
+                                        <p class="m-0 p-0" th:text="${userSubscription.getUser().getUserSubscriptions().size()}">null</p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -130,22 +146,27 @@
                 <!--posts of topic-->
                 <div class="card" style="border: blue 1px solid">
                     <div class="card-header bg-primary text-white p-2">
-                        <b>Posts : <span>Topic Name</span></b>
+                        <b>Posts : <span th:text="${topic.getTopicName()}">Topic Name</span></b>
                     </div>
                     <div class="card-body p-2">
+                        <div class="row" th:if="${topic.getResources().size() == 0}">
+                            <div class="col">
+                                <span>No posts yet</span>
+                            </div>
+                        </div>
                         <div class="row"  th:each="resource : ${topic.getResources()}">
                             <div class="col">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <img alt="image" width="80px"
-                                             height="80px" style="border-radius: 50%">
+                                             height="80px" style="border-radius: 50%" th:src="${'../../images/' + resource.getUser().getPhoto()}">
                                     </div>
 
-                                    <div class="col-10 pl-0">
+                                    <div class="col-10">
                                         <div class="form-control-md mr-1" style="font-family: fantasy">
-                                            <b>Username</b>
-                                            <a href="#">@userid</a>
-                                            <a href="#" class="float-right" th:text="${resource.getTopic().getTopicName()}">Topic</a>   <!-- @{'/topic/view/' + resource.getTopic().getId()}-->
+                                            <b th:text="${resource.getUser().getFirstName() + ' ' + resource.getUser().getLastName()}">Username</b>
+                                            <a href="#" th:text="${resource.getUser().getUsername()}">@userid</a>
+                                            <a th:href="@{${resource.getTopic().getId()}}" class="float-right" th:text="${resource.getTopic().getTopicName()}">Topic</a>   <!-- @{'/topic/view/' + resource.getTopic().getId()}-->
                                         </div>
                                         <div class="card-text form-control-sm p-0"
                                              style="text-align: justify; font-family: fantasy" th:text="${resource.getDescription()}">
@@ -153,10 +174,12 @@
                                             dolore dolores doloribus earum enim et excepturi facere fuga ipsa ipsu
                                         </div>
                                         <div class="row float-right mr-2">
-                                            <a class="mr-3" href="#" download="">Download</a>
-                                            <a class="mr-3" href="#">View full site</a>
-                                            <a class="mr-3" href="#">Mark as read</a>
-                                            <a href="#">View post</a> <!--@{'/resource/view/' + resource.getId()}-->
+                                            <span class="form-control-sm">
+                                                <!--<a class="mr-3" href="#" download="">Download</a>-->
+                                                <a class="mr-3" th:href="@{${resource.getLink() == null ? '' : resource.getLink()}}">View full site</a>
+                                                <!--<a class="mr-3" href="#">Mark as read</a>-->
+                                                <a th:href="@{'/resource/view/' + ${resource.getId()}}">View post</a> <!--@{'/resource/view/' + resource.getId()}-->
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -174,5 +197,41 @@
     <div th:include="~{fragments/footer}"></div>
 </div>
 </body>
+
+<script>
+    $(document).ready(function () {
+        $("#subscribeButton").on("click", function () {
+
+            let topicId = $(this).attr("data-topicId");
+
+            if($(this).text() == "Subscribe"){
+                $(this).text("Unsubscribe");
+                $.ajax({
+                    method:"GET",
+                    url:"/topic/view/subscribe",
+                    data:{topicId : topicId}
+                }).done(function () {
+
+                }).fail(function () {
+                    alert("Cannot subscribe");
+                });
+            }
+
+            else if($(this).text() == "Unsubscribe"){
+                // $.ajax({
+                //     method:"GET",
+                //     url:"/topic/view/subscribe",
+                //     data:{topicId : topicId}
+                // }).done(function () {
+                //
+                // }).fail(function () {
+                //     alert("Cannot subscribe");
+                // });
+                $(this).text("Subscribe");
+            }
+
+        });
+    })
+</script>
 
 </html>

@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Dashboard</title>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+          <!--integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"-->
+          <!--crossorigin="anonymous">-->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"-->
+          <!--integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"-->
+          <!--crossorigin="anonymous">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"-->
+            <!--integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"-->
+            <!--integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"-->
+            <!--crossorigin="anonymous"></script>-->
+<!--</head>-->
 <body>
 <div th:fragment="trending_topics">
     <div class="card mt-4" style="font-family: fantasy; border: blue 1px solid">
@@ -14,34 +28,29 @@
             <div class="row">
                 <div class="col">
                     <div class="row">
-                        <div class="col-md-2">
-                            <img src="../images/user.png" alt="image" width="70px"
-                                 height="70px" style="border-radius: 50%">
-                        </div>
-
-                        <div class="col-md-10">
+                        <div class="col">
                             <div class="form-control-md ml-2" style="font-family: fantasy">
-                                <a href="#">Topic</a>
+                                <a th:href="@{'/topic/view/' + ${trendingTopic.getId()}}" th:text="${trendingTopic.getTopicName()}">Topic</a>
                             </div>
                             <div class="card-text form-control-sm"
                                  style="text-align: justify; font-family: fantasy">
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <div class="p-0">@Username</div>
-                                        <div>
-                                            <a href="#">Unsubscribe</a>
+                                        <div class="p-0" th:text="${'@' + trendingTopic.getCreatedBy()}">@Username</div>
+                                        <div th:if="${user.getUsername()} != ${trendingTopic.getCreatedBy()}">
+                                            <a href="" id="subscribeButton" th:data-topicId="${trendingTopic.getId()}" th:text="${user.getUserSubscriptions().contains(userSubscriptionTrendingTopic) == true ? 'Unsubscribe' : 'Subscribe'}"></a>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="p-0">Subscriptions</div>
                                         <div id="subscriptions-trendingTopics">
-                                            <p th:name="subscrption">50</p>
+                                            <p th:text="${trendingTopic.getUserSubscriptions().size()}">50</p>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="p-0">Post</div>
                                         <div>
-                                            <p th:name="postNumber">3</p>
+                                            <p th:text="${trendingTopic.getResources().size()}">3</p>
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +58,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                   <!-- <div class="row">
                         <div class="col dropdown show ml-2">
                             <a class="btn btn-sm btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuTopic1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Very Serious
@@ -75,11 +84,46 @@
                             <a href="#"><i class="fas fa-edit fa-lg mr-2"></i></a>
                             <a href="#"><i class="far fa-trash-alt fa-lg"></i></a>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+<script>
+    $(document).ready(function () {
+        $("#subscribeButton").on("click", function () {
+
+            let topicId = $(this).attr("data-topicId");
+
+            if($(this).text() == "Subscribe"){
+                $.ajax({
+                    method:"GET",
+                    url:"/topic/view/subscribe",
+                    data:{topicId : topicId}
+                }).done(function () {
+
+                }).fail(function () {
+                    alert("Cannot subscribe");
+                });
+                $(this).text(($(this).text() == "Subscribe") ? "Unsubscribe" : "Subscribe");
+            }
+
+            else if($(this).text() == "Unsubscribe"){
+                $.ajax({
+                    method:"GET",
+                    url:"/unsubscribe",
+                    data:{topicId : topicId}
+                }).done(function () {
+
+                }).fail(function () {
+                    alert("Cannot subscribe");
+                });
+                $(this).text(($(this).text() == "Subscribe") ? "Unsubscribe" : "Subscribe");
+            }
+
+        });
+    })
+</script>
 </html>

@@ -11,6 +11,13 @@ public class TopicCo {
     @Size(min=1, message = "Topic name must contain at least 1 character")
     private String topicName;
 
+    public TopicCo(@NotBlank(message = "Topic name cannot be empty") @Size(min = 1, message = "Topic name must contain at least 1 character") String topicName, Visibility visibility) {
+        this.topicName = topicName;
+        this.visibility = visibility;
+    }
+
+    public TopicCo(){ }
+
     private Visibility visibility;
 
     public String getTopicName() {

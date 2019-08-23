@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 public class UserSubscription {
@@ -25,6 +26,12 @@ public class UserSubscription {
 
     @Enumerated(EnumType.STRING)
     private Seriousness seriousness;
+
+    public UserSubscription(Topic topic){
+        this.topic = topic;
+    }
+
+    public UserSubscription(){ }
 
     public User getUser() {
         return user;
@@ -56,5 +63,27 @@ public class UserSubscription {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        UserSubscription that = (UserSubscription) o;
+
+        if(o instanceof UserSubscription)
+        {
+            UserSubscription userSubscription = (UserSubscription) o;
+            return userSubscription.topic.getTopicName() == this.topic.getTopicName();
+        }
+        return false;
+
+//        Topic t = (Topic) o;
+//        return Objects.equals(topic.getTopicName(), t.getTopicName());
+
+//        return Objects.equals(id, that.id) &&
+//                Objects.equals(user, that.user) &&
+//                Objects.equals(topic, that.topic) &&
+//                seriousness == that.seriousness;
     }
 }

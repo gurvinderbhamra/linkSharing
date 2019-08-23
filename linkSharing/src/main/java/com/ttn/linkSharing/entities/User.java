@@ -36,6 +36,7 @@ public class User implements Serializable {
     private String username;
 
     @NotNull(message = "Password cannot be empty")
+    @Size(min = 2, max = 15, message = "Password must contain more than 2 and less than 15 characters")
     private String password;
     private String photo;
 

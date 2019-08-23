@@ -34,6 +34,7 @@ public class DocumentResourceService {
         User user = userService.getUserById(userid);
 
         DocumentResource documentResource = new DocumentResource(documentResourceCo, topicService.getTopicByTopicId(documentResourceCo.getId()));
+        documentResource.setUser(user);
         Topic topic = topicService.getTopicByName(documentResource.getTopic().getTopicName());
         documentResource.setTopic(topic);
 

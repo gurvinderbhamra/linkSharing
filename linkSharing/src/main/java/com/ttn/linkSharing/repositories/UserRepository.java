@@ -15,6 +15,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findById(Long userId);
 
+    Boolean existsByUsernameOrEmail(String username, String email);
+
     @Query("select u from User u where u.firstName like %:searchText% " +
             "or u.LastName like %:searchText% " +
             "or u.username like %:searchText%")

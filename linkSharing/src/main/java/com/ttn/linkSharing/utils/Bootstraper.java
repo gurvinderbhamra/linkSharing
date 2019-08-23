@@ -25,7 +25,7 @@ public class Bootstraper {
 
     @Autowired
     TopicRepository topicRepository;
-
+/*
     @EventListener(ApplicationStartedEvent.class)
     public void bootstrapData(){
         User user = new User();
@@ -71,5 +71,5 @@ public class Bootstraper {
         topic1.setUserSubscriptions(Arrays.asList(subscription1));
         topic1.setCreatedBy(user.getUsername());
         topicRepository.save(topic1);
-    }
+    }*/
 }

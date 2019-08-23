@@ -34,7 +34,13 @@ public abstract class Resource implements Serializable {
     @ManyToOne
     private Topic topic;
 
+    //changes here
+    @ManyToOne
+    private User user;
+
     private String description;
+
+    abstract String getLink();
 
     @OneToMany(mappedBy = "resource", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<UserResource> userResources = new ArrayList<>();
@@ -85,6 +91,14 @@ public abstract class Resource implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 
 }

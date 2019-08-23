@@ -40,43 +40,50 @@
                         <b>Topics</b>
                     </div>
                     <div class="card-body p-2">
-                        <div class="row">
+                        <div class="row" th:if="${user.getUserSubscriptions().size() == 0}">
+                            <div class="col">
+                                <span class="text-secondary form-control-sm">No topics created</span>
+                            </div>
+                        </div>
 
+                        <div class="row" th:each="subscription : ${user.getUserSubscriptions()}" th:if="${subscription.getTopic().getCreatedBy() == user.getUsername()}">
                             <div class="col-md-12">
-
                                 <div class="card-text form-control-sm"
                                      style="font-family: fantasy">
                                     <div class="row mt-0">
                                         <div class="col-5">
-                                            <div><a href="#">Topic</a></div>
-                                            <div class="row m-0">
-                                                <div class="col dropdown show">
-                                                    <select class="form-control form-control-sm bg-primary text-white ml-1" id="seriousnessSelect">
-                                                        <option th:each="seriousness : ${T(com.ttn.linkSharing.enums.Seriousness).values()}"
-                                                                th:value="${seriousness}"
-                                                                th:text="${seriousness.getValue()}"></option>
-                                                    </select>
-                                                </div>
-                                                <a href="#"><i class="far fa-envelope fa-lg mt-2 form-control-primary"></i></a>
+                                            <div>
+                                                <a th:href="@{'/topic/view/' + ${subscription.getTopic().getId()}}"
+                                                    th:text="${subscription.getTopic().getTopicName()}">Topic</a>
                                             </div>
+                                            <!--<div class="row m-0">-->
+                                                <!--<div class="col dropdown show">-->
+                                                    <!--<select class="form-control form-control-sm bg-primary text-white ml-1" id="seriousnessSelect">-->
+                                                        <!--<option th:each="seriousness : ${T(com.ttn.linkSharing.enums.Seriousness).values()}"-->
+                                                                <!--th:value="${seriousness}"-->
+                                                                <!--th:text="${seriousness.getValue()}"></option>-->
+                                                    <!--</select>-->
+                                                <!--</div>-->
+                                                <!--<a href="#"><i class="far fa-envelope fa-lg mt-2 form-control-primary"></i></a>-->
+                                            <!--</div>-->
                                         </div>
                                         <div class="col">
                                             <div class="p-0">Subscriptions</div>
                                             <div id="subscriptions">
-                                                <p th:name="subscrption">50</p>
+                                                <p th:name="subscrption" th:text="${subscription.getTopic().getUserSubscriptions().size()}">50</p>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="p-0">Post</div>
                                             <div>
-                                                <p th:name="postNumber">3</p>
+                                                <p th:name="postNumber" th:text="${subscription.getTopic().getResources().size()}">3</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <hr>
                         </div>
-
                     </div>
                 </div>
 
@@ -86,40 +93,45 @@
                         <b>Subscriptions</b>
                     </div>
                     <div class="card-body p-2">
-                        <div class="row">
+                        <div class="row" th:if="${user.getUserSubscriptions().size() == 0}">
+                            <div class="col">
+                                <span class="text-secondary form-control-sm">No subscriptions yet</span>
+                            </div>
+                        </div>
+                        <div class="row" th:each="userSubscription : ${user.getUserSubscriptions()}">
                             <div class="col-md-12">
 
                                 <div class="card-text form-control-sm"
                                      style="font-family: fantasy">
                                     <div class="row mt-0">
                                         <div class="col-5">
-                                            <div><a href="#">Topic</a></div>
-                                            <div class="row m-0">
-                                                <div class="dropdown form-control-sm pl-0">
-                                                    <button class="btn btn-sm btn-primary dropdown-toggle" type="button"
-                                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                        Seriousness
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#">Serious</a>
-                                                        <a class="dropdown-item" href="#">Casual</a>
-                                                        <a class="dropdown-item" href="#">Very Serious</a>
-                                                    </div>
-                                                </div>
-                                                <a href="#"><i class="far fa-envelope fa-lg mt-2 form-control-primary"></i></a>
-                                            </div>
+                                            <div><b><a th:href="@{'/topic/view/' + ${userSubscription.getTopic().getId()}}" th:text="${userSubscription.getTopic().getTopicName()}">Topic</a></b></div>
+                                            <!--<div class="row m-0">-->
+                                                <!--<div class="dropdown form-control-sm pl-0">-->
+                                                    <!--<button class="btn btn-sm btn-primary dropdown-toggle" type="button"-->
+                                                            <!--id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"-->
+                                                            <!--aria-expanded="false">-->
+                                                        <!--Seriousness-->
+                                                    <!--</button>-->
+                                                    <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+                                                        <!--<a class="dropdown-item" href="#">Serious</a>-->
+                                                        <!--<a class="dropdown-item" href="#">Casual</a>-->
+                                                        <!--<a class="dropdown-item" href="#">Very Serious</a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                                <!--<a href="#"><i class="far fa-envelope fa-lg mt-2 form-control-primary"></i></a>-->
+                                            <!--</div>-->
                                         </div>
                                         <div class="col">
                                             <div class="p-0">Subscriptions</div>
                                             <div id="subscriptions">
-                                                <p th:name="subscrption">50</p>
+                                                <p th:name="subscrption" th:text="${userSubscription.getTopic().getUserSubscriptions().size()}">50</p>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="p-0">Post</div>
                                             <div>
-                                                <p th:name="postNumber">3</p>
+                                                <p th:name="postNumber" th:text="${userSubscription.getTopic().getResources().size()}">3</p>
                                             </div>
                                         </div>
                                     </div>
@@ -142,29 +154,35 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col">
-                                <div class="row">
+                                <div class="row" th:if="${user.getUserResources().size() == 0}">
+                                    <div class="col-md-12 text-secondary form-control-sm">
+                                        No Posts yet
+                                    </div>
+                                </div>
+                                <div class="row" th:each="userResource : ${user.getUserResources()}">
 
                                     <div class="col-md-12">
                                         <div class="form-control-md ml-2">
-                                            <span id="topicName" name="topicName"><b>Topic Name</b></span>
+                                            <b><span id="topicName" name="topicName" th:text="${userResource.getResource().getTopic().getTopicName()}"></span></b>
                                         </div>
+
                                         <div class="card-text form-control-sm"
-                                             style="text-align: justify">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
-                                            dolore dolores doloribus earum enim et excepturi facere fuga ipsa ipsu
+                                             style="text-align: justify" th:text="${userResource.getResource().getDescription()}">
                                         </div>
+
                                         <div class="card-text form-control-sm">
                                             <span class="float-right">
-                                                <a href="#" class="ml-2">Download</a>
-                                                <a href="#" class="ml-2">View full site</a>
-                                                <a href="#" class="ml-2">Mark as read</a>
-                                                <a href="#" class="ml-2">View post</a>
+                                                <!--<a href="#" class="ml-2">Download</a>-->
+                                                <a th:href="@{${userResource.getResource().getLink() == null ? '' : userResource.getResource().getLink()}}" target="_blank" class="ml-2" title="View full site">View full site</a>
+                                                <!--<a href="#" class="ml-2">Mark as read</a>-->
+                                                <a th:href="@{'/resource/view/' + ${userResource.getResource().getId()}}" class="ml-2" title="View post">View post</a>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
                 </div>
 

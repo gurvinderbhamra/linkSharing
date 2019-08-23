@@ -5,6 +5,7 @@ import com.ttn.linkSharing.co.LinkResourceCo;
 import com.ttn.linkSharing.co.PasswordCo;
 import com.ttn.linkSharing.entities.Topic;
 import com.ttn.linkSharing.entities.User;
+import com.ttn.linkSharing.entities.UserSubscription;
 import com.ttn.linkSharing.service.TopicService;
 import com.ttn.linkSharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,15 @@ public class UserController {
                 User user1 = userService.getUserById((Long) session.getAttribute("userid"));
                 modelAndView.addObject("user", user1);
                 modelAndView.addObject("topic", new Topic());
+                Topic trendingTopic = topicService.getTrendingTopic();
+                modelAndView.addObject("trendingTopic", trendingTopic);
+                modelAndView.addObject("userSubscriptionTrendingTopic", new UserSubscription(trendingTopic));
                 modelAndView.addObject("linkResourceCo", new LinkResourceCo());
                 modelAndView.addObject("documentResourceCo", new DocumentResourceCo());
                 modelAndView.addObject("userTopics", topicService.countTopicsOfUser(user1.getUsername()));
                 modelAndView.setViewName("dashboard");
             }
-        else{
+            else{
                 modelAndView.addObject("user", user);
                 modelAndView.setViewName("index");
             }
@@ -112,6 +116,9 @@ public class UserController {
 
     private void addAttributes(Model model, User user){
         model.addAttribute("user", user);
+        Topic trendingTopic = topicService.getTrendingTopic();
+        model.addAttribute("trendingTopic", trendingTopic);
+        model.addAttribute("userSubscriptionTrendingTopic", new UserSubscription(trendingTopic));
         model.addAttribute("topic", new Topic());
         model.addAttribute("linkResourceCo",new LinkResourceCo());
         model.addAttribute("documentResourceCo",new DocumentResourceCo());

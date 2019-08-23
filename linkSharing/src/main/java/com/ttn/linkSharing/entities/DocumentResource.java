@@ -18,6 +18,10 @@ public class DocumentResource extends Resource {
         this.setId(documentResourceCo.getId());
     }
 
+    public String getLink(){
+        return null;
+    }
+
     public String getPath() {
         return path;
     }

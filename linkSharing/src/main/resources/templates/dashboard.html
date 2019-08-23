@@ -38,11 +38,16 @@
                         <b>Subscriptions</b>
                     </div>
                     <div class="card-body p-2">
+                        <div class="row" th:if="${user.getUserSubscriptions().size() == 0}">
+                            <div class="col">
+                                <span class="text-secondary">No subscriptions yet</span>
+                            </div>
+                        </div>
                         <div class="row" th:each="userSubscription : ${user.getUserSubscriptions()}">
                             <div class="col">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img src="images/user.png" alt="image" width="70px"
+                                        <img src="images/user.png" th:src="${'../images/' + userSubscription.getUser().getPhoto()}" alt="image" width="70px"
                                              height="70px" style="border-radius: 50%">
                                     </div>
 
@@ -55,8 +60,8 @@
                                             <div class="row mt-2">
                                                 <div class="col">
                                                     <div class="p-0" th:text="${'@' + userSubscription.getTopic().getCreatedBy()}"></div>
-                                                    <div>
-                                                        <a href="#">Unsubscribe</a>
+                                                    <div th:if="${user} != ${userSubscription.getUser()}" id="subscribeDiv">
+                                                        <a href="#" id="subscribe">Unsubscribe</a>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -80,9 +85,9 @@
                                     <div class="col dropdown show ml-2" id="seriousnessDropdown">
                                         <select class="form-control form-control-sm bg-primary text-white ml-1" id="seriousnessSelect"
                                                 th:data-userSubscriptionId="${userSubscription.getId()}" th:data-topicId="${userSubscription.getTopic().getId()}">
-                                            <option th:text="${userSubscription.getSeriousness()}" selected></option>
+                                            <option th:text="${userSubscription.getSeriousness().getValue()}" selected></option>
                                             <option th:each="seriousness : ${T(com.ttn.linkSharing.enums.Seriousness).values()}"
-                                                    th:value="${seriousness}"
+                                                    th:if="${seriousness} != ${userSubscription.getSeriousness()}" th:value="${seriousness}"
                                                     th:text="${seriousness.getValue()}"></option>
                                         </select>
                                     </div>
@@ -90,14 +95,13 @@
                                     <div class="col dropdown show m-0" id="visbilityDropdown">
                                         <select class="form-control form-control-sm bg-primary text-white ml-1" id="visbilitySelect"
                                                 th:data-topicId="${userSubscription.getTopic().getId()}">
-                                            <option th:text="${userSubscription.getTopic().getVisibility().getValue().toUpperCase()}" selected></option>
+                                            <option th:text="${userSubscription.getTopic().getVisibility().getValue()}" selected></option>
                                             <option th:each="visibility : ${T(com.ttn.linkSharing.enums.Visibility).values()}"
-                                                    th:value="${visibility}"
+                                                    th:if="${visibility} != ${userSubscription.getTopic().getVisibility()}" th:value="${visibility}"
                                                     th:text="${visibility.getValue()}"></option>
                                         </select>
                                     </div>
-                                    <div class="col float-right">
-                                        <a href="#"><i class="far fa-envelope fa-lg mr-2"></i></a>
+                                    <div class="col float-right" th:if="${user.getId()} == ${userSubscription.getUser().getId()}">
                                         <a href="" data-target="#editTopicModal" data-toggle="modal"><i class="fas fa-edit fa-lg mr-2"></i></a>
                                         <a th:href="@{'/topic_deleted/' + ${userSubscription.getTopic().getId()}}"><i class="far fa-trash-alt fa-lg"></i></a>
                                     </div>
@@ -157,9 +161,14 @@
                 <!--inbox-->
                 <div class="card" style="border: blue 1px solid">
                     <div class="card-header bg-primary text-white p-2">
-                        <b>Inbox</b>
+                        <b>Recently Added</b>
                     </div>
                     <div class="card-body p-2">
+                        <div class="row" th:if="${user.getUserResources().size() == 0}">
+                            <div class="col">
+                                <span>No posts yet</span>
+                            </div>
+                        </div>
                         <div class="row" th:each="userResource : ${user.getUserResources()}">
                             <div class="col">
                                 <div class="row">
@@ -177,7 +186,8 @@
                                                th:text="${'@' + userResource.getUser().getUsername()}">
                                                 @userid
                                             </a>
-                                            <a th:href="@{'/topic/view/' + ${userResource.getResource().getTopic().getId()}}" th:text="${userResource.getResource().getTopic().getTopicName()}"
+                                            <a th:href="@{'/topic/view/' + ${userResource.getResource().getTopic().getId()}}"
+                                               th:text="${userResource.getResource().getTopic().getTopicName()}"
                                                class="float-right">
                                                 Topic
                                             </a>
@@ -188,10 +198,12 @@
                                              style="text-align: justify; font-family: fantasy"></div>
 
                                         <div class="row float-right mr-2">
-                                            <a class="mr-3" href="#">Download</a>
-                                            <a class="mr-3" href="#">View full site</a>      <!--th:if="${userResource.getResource() instanceof T(com.ttn.linkSharing.entities.LinkResource)}" th:href="@{userResource.getResource().getLink()}"-->
-                                            <a class="mr-3" href="#">Mark as read</a>
-                                            <a th:href="@{'/resource/view/' + ${userResource.getResource().getId()}}">View post</a>
+                                            <span class="form-control-sm">
+                                                <a class="mr-3"
+                                                   th:href="@{${userResource.getResource().getLink() == null ? '' : userResource.getResource().getLink()}}"
+                                                   target="_blank">View full site</a>
+                                                <a th:href="@{'/resource/view/' + ${userResource.getResource().getId()}}">View post</a>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -247,6 +259,23 @@
             }).fail(function () {
 
             });
+        });
+
+        $("#subscribe").on("click", function () {
+
+            // let topicId = $(this).attr("data-topicId");
+            //
+            // $.ajax({
+            //     method:"GET",
+            //     url:"/subscribe",
+            //     data:{topicId : topicId}
+            // }).done(function () {
+            //
+            // }).fail(function () {
+            //     alert("Cannot subscribe");
+            // });
+            //
+            // $(this).text(($(this).text() == "Subscribe") ? "Unsubscribe" : "Subscribe");
         });
     });
 </script>

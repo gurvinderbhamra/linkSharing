@@ -55,7 +55,7 @@
                                                 Name*: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control form-control-sm" id="firstName"
-                                                       name="firstName" placeholder="First Name" required>
+                                                       name="firstName" th:value="${user.getFirstName()}" placeholder="First Name" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -63,7 +63,7 @@
                                                 Name*: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control form-control-sm" id="lastName"
-                                                       name="lastName" placeholder="Last Name" required>
+                                                       name="lastName" placeholder="Last Name" th:value="${user.getLastName()}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -71,7 +71,7 @@
                                                    class="col-md-4 col-form-label form-control-sm">Username*: </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control form-control-sm" id="username"
-                                                       name="username" placeholder="Username" required>
+                                                       name="username" placeholder="Username" th:value="${user.getUsername()}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -110,7 +110,7 @@
                                             <label for="password" class="col-md-4 col-form-label form-control-sm">Password* </label>
                                             <div class="col-md-8">
                                                 <input th:field="*{password}" type="password" class="form-control form-control-sm" id="password"
-                                                       name="password" placeholder="Password" required>
+                                                       name="password" placeholder="Password" autocomplete="off" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -118,7 +118,7 @@
                                                 Password* </label>
                                             <div class="col-md-8">
                                                 <input th:field="*{confirmPassword}" type="password" class="form-control form-control-sm" id="confirm_password"
-                                                       name="confirmPassword" placeholder="Confirm Password" required>
+                                                       name="confirmPassword" placeholder="Confirm Password" autocomplete="off" required>
                                             </div>
                                         </div>
                                         <input type="submit" class="btn btn-primary btn-sm col-5" value="Update"
@@ -144,6 +144,7 @@
     <div th:include="~{fragments/footer}"></div>
 
 </div>
+<div th:include="~{fragments/snackbar_fragment}"></div>
 </body>
 </html>
 
